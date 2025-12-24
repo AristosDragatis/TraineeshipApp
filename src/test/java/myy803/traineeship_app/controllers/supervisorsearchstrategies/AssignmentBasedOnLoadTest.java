@@ -4,6 +4,7 @@ import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.ProfessorMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,30 +32,38 @@ public class AssignmentBasedOnLoadTest {
     @InjectMocks
     private AssignmentBasedOnLoad strategy;
 
+    //declare variables that are the same
+    private TraineeshipPosition mockPosition;
+    private Professor prof1;
+    private Professor prof2;
+    private final int positionId = 100;
+
+    // runs before each test
+    @BeforeEach
+    void setUp(){
+        mockPosition = new TraineeshipPosition();
+        mockPosition.setId(positionId);
+
+        prof1 = new Professor("prof1");
+        prof1.setSupervisedPositions(new ArrayList<>());
+
+        prof2 = new Professor("prof2");
+        prof2.setSupervisedPositions(new ArrayList<>());
+
+    }
 
     @Test
     void testAssignmentBasedOnLoad(){
-        // create the position to be assigned
-        int positionId = 100;
-        TraineeshipPosition mockPosition = new TraineeshipPosition();
-        mockPosition.setId(positionId);
+
+        // add 3 positions to prof1 to increase load
+        prof1.getSupervisedPositions().add(new TraineeshipPosition());
+        prof1.getSupervisedPositions().add(new TraineeshipPosition());
+        prof1.getSupervisedPositions().add(new TraineeshipPosition());
 
 
-        Professor busyProf = new Professor("busy_prof");
-        busyProf.setSupervisedPositions(new ArrayList<>());
+        List<Professor> professorsList = Arrays.asList(prof1,prof2);
 
-        // add 3 positions to busyProf to increase load
-        busyProf.getSupervisedPositions().add(new TraineeshipPosition());
-        busyProf.getSupervisedPositions().add(new TraineeshipPosition());
-        busyProf.getSupervisedPositions().add(new TraineeshipPosition());
-
-        // the other professor that has less amount of load ( or not at all )
-        Professor freeProf = new Professor("free_prof");
-        freeProf.setSupervisedPositions(new ArrayList<>());
-
-        List<Professor> professorsList = Arrays.asList(busyProf, freeProf);
-
-        // stubbing mocks
+        // stubbing
         // we use Optional.of because that is what is returned by findById()
         when(positionsMapper.findById(positionId)).thenReturn(Optional.of(mockPosition));
         when(professorMapper.findAll()).thenReturn(professorsList);
@@ -64,14 +73,30 @@ public class AssignmentBasedOnLoadTest {
 
         // check
         assertNotNull(mockPosition.getSupervisor());
-        assertEquals(freeProf, mockPosition.getSupervisor(), "professor with less amount of load should be selected");
+        assertEquals(prof2, mockPosition.getSupervisor(), "professor with less amount of load should be selected");
 
         // check if position is added to the professor's list
-        assertEquals(1, freeProf.getSupervisedPositions().size());
+        assertEquals(1, prof2.getSupervisedPositions().size());
 
         // check to see if save is called in the database
         verify(positionsMapper).save(mockPosition);
     }
 
-    // TODO add a new test for equal load of professors
+    // equal loads
+    @Test
+    void testAssignmentBasedOnLoad_EqualLoads(){
+        prof1.getSupervisedPositions().add(new TraineeshipPosition());
+        prof2.getSupervisedPositions().add(new TraineeshipPosition());
+
+        List<Professor> professorsList = Arrays.asList(prof1, prof2);
+
+        when(positionsMapper.findById(positionId)).thenReturn(Optional.of(mockPosition));
+        when(professorMapper.findAll()).thenReturn(professorsList);
+
+        strategy.assign(positionId);
+
+        // >= 0 in the algorithm , it will get the last element (prof2)
+        assertEquals(prof2, mockPosition.getSupervisor());
+        verify(positionsMapper).save(mockPosition);
+    }
 }

@@ -20,8 +20,5 @@ public class StudentTest {
 
 
         assertNotNull(student, "student object must not be null");
-
     }
-
-
 }

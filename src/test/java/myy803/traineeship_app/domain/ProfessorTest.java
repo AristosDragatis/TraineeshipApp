@@ -30,6 +30,5 @@ public class ProfessorTest {
 
         int resultHigher = candidate.compareLoad(current);
         assertEquals(0, resultHigher, "0 must be returned because candidate (current) has bigger load");
-
     }
 }
