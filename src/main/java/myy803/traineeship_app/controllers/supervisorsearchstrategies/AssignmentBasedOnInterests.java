@@ -22,7 +22,8 @@ public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy{
 	public void assign(Integer positionId) {
 		TraineeshipPosition position = positionsMapper.findById(positionId).get();
 		List<Professor> professors = professorMapper.findAll();
-		
+
+		// splits the topics if it finds ( , )
 		String[] topics = position.getTopics().split("[,\\s+\\.]");
 		Professor candidateSupervisor = null;
 		for(Professor professor : professors) {
