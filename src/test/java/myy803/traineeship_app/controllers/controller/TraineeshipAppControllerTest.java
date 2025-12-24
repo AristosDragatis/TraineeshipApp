@@ -6,6 +6,7 @@ import myy803.traineeship_app.mappers.CompanyMapper;
 import myy803.traineeship_app.mappers.ProfessorMapper;
 import myy803.traineeship_app.mappers.StudentMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
@@ -35,5 +36,10 @@ public class TraineeshipAppControllerTest {
     @Mock
     private Model model;
 
+
+    @Test
+    void testCommitteeFindPositions(){
+
+    }
 
 }
