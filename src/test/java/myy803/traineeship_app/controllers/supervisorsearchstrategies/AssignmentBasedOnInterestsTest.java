@@ -4,6 +4,7 @@ import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.ProfessorMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,24 +31,34 @@ public class AssignmentBasedOnInterestsTest {
     @InjectMocks
     private AssignmentBasedOnInterests strategy;
 
+    // initializing fields
+    private final int positionId = 101;
+    private TraineeshipPosition mockPosition;
+    private Professor historyProf;
+    private Professor javaProf;
+
+
+    @BeforeEach
+    void setUp(){
+        mockPosition = new TraineeshipPosition();
+        mockPosition.setId(positionId);
+
+        historyProf = new Professor("history_prof");
+        historyProf.setSupervisedPositions(new ArrayList<>());
+
+        javaProf = new Professor("java_prof");
+        javaProf.setSupervisedPositions(new ArrayList<>());
+    }
+
 
     @Test
     void testAssignmentBasedOnMatchingInterests(){
-        // initialize position
-        int positionId = 101;
-        TraineeshipPosition mockPosition = new TraineeshipPosition();
-        mockPosition.setId(positionId);
 
         // this will split based on the regex (Java and Backend)
         mockPosition.setTopics("Java,Backend");
 
-        Professor historyProf = new Professor("history_prof");
         historyProf.setInterests("History,Ancient Greece");
-        historyProf.setSupervisedPositions(new ArrayList<>());
-
-        Professor javaProf = new Professor("java_prof");
         javaProf.setInterests("Software Engineering,Java,Spring");
-        javaProf.setSupervisedPositions(new ArrayList<>());
 
         List<Professor> professorsList = Arrays.asList(historyProf, javaProf);
 

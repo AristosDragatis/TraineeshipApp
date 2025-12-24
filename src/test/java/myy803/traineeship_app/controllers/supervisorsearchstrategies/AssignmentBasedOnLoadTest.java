@@ -32,13 +32,13 @@ public class AssignmentBasedOnLoadTest {
     @InjectMocks
     private AssignmentBasedOnLoad strategy;
 
-    //declare variables that are the same
+    // initialize fields (fixture pattern)
     private TraineeshipPosition mockPosition;
     private Professor prof1;
     private Professor prof2;
     private final int positionId = 100;
 
-    // runs before each test
+    // runs before each test (fixture pattern)
     @BeforeEach
     void setUp(){
         mockPosition = new TraineeshipPosition();
