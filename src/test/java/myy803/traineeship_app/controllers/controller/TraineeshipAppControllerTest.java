@@ -4,6 +4,7 @@ import myy803.traineeship_app.controllers.TraineeshipAppController;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
+import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.CompanyMapper;
@@ -31,6 +32,9 @@ public class TraineeshipAppControllerTest {
 
     @Mock
     private PositionsSearchFactory positionsSearchFactory;
+
+    @Mock
+    private SupervisorAssignmentStrategy mockAssignmentStrategy;
 
     @Mock
     private PositionsSearchStrategy mockStrategy;
@@ -122,5 +126,21 @@ public class TraineeshipAppControllerTest {
         verify(model).addAttribute("position_id", positionId);
 
         verify(positionsMapper).save(mockPosition);
+    }
+
+    @Test
+    void testCommitteeAssignSupervisor(){
+        when(supervisorAssigmentFactory.create(strategyName)).thenReturn(mockAssignmentStrategy);
+
+
+        String viewName = controller.assignSupervisor(positionId, strategyName, model);
+
+        assertEquals("committee/dashboard", viewName);
+
+        // verify that the Factory was called with the right strategy name
+        verify(supervisorAssigmentFactory).create(strategyName);
+
+        // verify that the strategy run the assignment with the correct positionId
+        verify(mockAssignmentStrategy).assign(positionId);
     }
 }
