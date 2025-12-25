@@ -4,6 +4,7 @@ import myy803.traineeship_app.controllers.TraineeshipAppController;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
+import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.CompanyMapper;
 import myy803.traineeship_app.mappers.ProfessorMapper;
@@ -19,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -54,10 +56,13 @@ public class TraineeshipAppControllerTest {
     @InjectMocks
     private TraineeshipAppController controller;
 
+    // declaration
+    private Integer positionId;
     private String studentUsername;
     private String strategyName;
     List<TraineeshipPosition> mockPositions;
-
+    private TraineeshipPosition mockPosition;
+    private Student student;
 
     // setting up fields
     @BeforeEach
@@ -65,6 +70,11 @@ public class TraineeshipAppControllerTest {
         studentUsername = "aris";
         strategyName = "interests";
         mockPositions = new ArrayList<>();
+        student = new Student();
+
+        positionId = 105;
+        mockPosition = new TraineeshipPosition();
+        mockPosition.setId(positionId);
 
     }
 
@@ -91,10 +101,26 @@ public class TraineeshipAppControllerTest {
 
     @Test
     void testCommitteeAssignPositions(){
+        // student is looking for traineeship and position is free
+        student.setLookingForTraineeship(true);
+        mockPosition.setAssigned(false);
 
+        // stubbing
+        when(studentMapper.findByUsername(studentUsername)).thenReturn(student);
+        when(positionsMapper.findById(positionId)).thenReturn(Optional.of(mockPosition));
 
+        // act
+        String viewName = controller.assignPosition(positionId, studentUsername, model);
 
+        assertEquals("committee/supervisor_assignment", viewName);
+        assertTrue(mockPosition.isAssigned()); // position is assigned
+        assertFalse(student.isLookingForTraineeship()); // student stopped looking
+        assertEquals(mockPosition, student.getAssignedTraineeship());
+        assertEquals(student , mockPosition.getStudent());
 
+        // check if the position is saved
+        verify(model).addAttribute("position_id", positionId);
+
+        verify(positionsMapper).save(mockPosition);
     }
-
 }
