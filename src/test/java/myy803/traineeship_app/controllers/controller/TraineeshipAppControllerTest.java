@@ -60,11 +60,12 @@ public class TraineeshipAppControllerTest {
     @InjectMocks
     private TraineeshipAppController controller;
 
-    // declaration
+    // declaration of fields
     private Integer positionId;
     private String studentUsername;
     private String strategyName;
     List<TraineeshipPosition> mockPositions;
+    List<Student> traineeshipApplications;
     private TraineeshipPosition mockPosition;
     private Student student;
 
@@ -73,7 +74,9 @@ public class TraineeshipAppControllerTest {
     void setUp(){
         studentUsername = "aris";
         strategyName = "interests";
+
         mockPositions = new ArrayList<>();
+        traineeshipApplications = new ArrayList<>();
         student = new Student();
 
         positionId = 105;
@@ -82,7 +85,7 @@ public class TraineeshipAppControllerTest {
 
     }
 
-    // testing committe find position method
+    // testing committe find positions
     @Test
     void testCommitteeFindPositions(){
         // initializing
@@ -103,6 +106,7 @@ public class TraineeshipAppControllerTest {
         verify(model).addAttribute("student_username", studentUsername);
     }
 
+    // testing committee assign positions
     @Test
     void testCommitteeAssignPositions(){
         // student is looking for traineeship and position is free
@@ -128,10 +132,10 @@ public class TraineeshipAppControllerTest {
         verify(positionsMapper).save(mockPosition);
     }
 
+    // testing committee assign supervisor
     @Test
     void testCommitteeAssignSupervisor(){
         when(supervisorAssigmentFactory.create(strategyName)).thenReturn(mockAssignmentStrategy);
-
 
         String viewName = controller.assignSupervisor(positionId, strategyName, model);
 
@@ -142,5 +146,23 @@ public class TraineeshipAppControllerTest {
 
         // verify that the strategy run the assignment with the correct positionId
         verify(mockAssignmentStrategy).assign(positionId);
+    }
+
+    @Test
+    void testListTraineeshipApplications(){
+
+        // initialize
+        traineeshipApplications.add(new Student());
+        student.setLookingForTraineeship(true);
+
+        // stubbing
+        when(studentMapper.findByLookingForTraineeshipTrue()).thenReturn(traineeshipApplications);
+
+        String viewName = controller.listTraineeshipApplications(model);
+
+        assertEquals("committee/traineeship_applications", viewName);
+
+        // verification
+        verify(model).addAttribute("traineeship_applications", traineeshipApplications);
     }
 }
