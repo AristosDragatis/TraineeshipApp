@@ -26,6 +26,4 @@ public class ProfessorService {
 
         professorMapper.save(professor);
     }
-
-
 }

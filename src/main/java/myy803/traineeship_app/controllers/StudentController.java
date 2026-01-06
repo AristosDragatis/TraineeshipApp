@@ -2,6 +2,7 @@ package myy803.traineeship_app.controllers;
 
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.mappers.StudentMapper;
+import myy803.traineeship_app.service.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,9 @@ public class StudentController {
 
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private StudentService studentService;
 
 
     // ---------- Student User Stories
@@ -32,9 +36,8 @@ public class StudentController {
         String studentUsername = authentication.getName();
         System.err.println("Logged use: " + studentUsername);
 
-        Student student = studentMapper.findByUsername(studentUsername);
-        if (student == null)
-            student = new Student(studentUsername);
+        // service layer call
+        Student student = studentService.retrieveStudentProfile(studentUsername);
 
         model.addAttribute("student", student);
 
@@ -44,8 +47,7 @@ public class StudentController {
     @RequestMapping("/student/save_profile")
     public String saveProfile(@ModelAttribute("student") Student student, Model theModel) {
 
-        student.setLookingForTraineeship(true);
-        studentMapper.save(student);
+        studentService.saveStudentProfile(student);
 
         return "student/dashboard";
     }
