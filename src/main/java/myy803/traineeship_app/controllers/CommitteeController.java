@@ -59,8 +59,7 @@ public class CommitteeController {
             @RequestParam("selected_student_id") String studentUsername,
             @RequestParam("strategy") String strategy, Model model) {
 
-        PositionsSearchStrategy searchStrategy = positionsSearchFactory.create(strategy);
-        List<TraineeshipPosition> positions = searchStrategy.search(studentUsername);
+        List<TraineeshipPosition> positions =  traineeshipService.findPositionsForStudent(studentUsername, strategy);
 
         model.addAttribute("positions", positions);
         model.addAttribute("student_username", studentUsername);
