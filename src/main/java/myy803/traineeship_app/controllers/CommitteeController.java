@@ -8,6 +8,7 @@ import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.StudentMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
+import myy803.traineeship_app.service.services.TraineeshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@RequestMapping("/committee/")
 @Controller
 public class CommitteeController {
 
@@ -32,16 +34,19 @@ public class CommitteeController {
     @Autowired
     SupervisorAssigmentFactory supervisorAssigmentFactory;
 
+    @Autowired
+    private TraineeshipService  traineeshipService;
+
 
     // ---------- Committee User Stories
 
-    @RequestMapping("/committee/dashboard")
+    @RequestMapping("/dashboard")
     public String getCommitteeDashboard(){
 
         return "committee/dashboard";
     }
 
-    @RequestMapping("/committee/list_traineeship_applications")
+    @RequestMapping("/list_traineeship_applications")
     public String listTraineeshipApplications(Model model) {
         List<Student> traineeshipApplications = studentMapper.findByLookingForTraineeshipTrue();
 
@@ -49,7 +54,7 @@ public class CommitteeController {
         return "committee/traineeship_applications";
     }
 
-    @RequestMapping("/committee/find_positions")
+    @RequestMapping("/find_positions")
     public String findPositions(
             @RequestParam("selected_student_id") String studentUsername,
             @RequestParam("strategy") String strategy, Model model) {
@@ -63,7 +68,7 @@ public class CommitteeController {
         return "committee/available_positions";
     }
 
-    @RequestMapping("/committee/assign_position")
+    @RequestMapping("/assign_position")
     public String assignPosition(
             @RequestParam("selected_position_id") Integer positionId,
             @RequestParam("applicant_username") String studentUsername,
@@ -72,20 +77,16 @@ public class CommitteeController {
         Student student = studentMapper.findByUsername(studentUsername);
         TraineeshipPosition position = positionsMapper.findById(positionId).get();
 
-        position.setAssigned(true);
-        position.setStudent(student);
+        // call service layer
+        traineeshipService.assignPositionToStudent(positionId, studentUsername);
 
-        student.setAssignedTraineeship(position);
-        student.setLookingForTraineeship(false);
-
-        positionsMapper.save(position);
 
         model.addAttribute("position_id", positionId);
 
         return "committee/supervisor_assignment";
     }
 
-    @RequestMapping("/committee/assign_supervisor")
+    @RequestMapping("/assign_supervisor")
     public String assignSupervisor(
             @RequestParam("selected_position_id") Integer positionId,
             @RequestParam("strategy") String strategy,
@@ -96,5 +97,4 @@ public class CommitteeController {
 
         return "committee/dashboard";
     }
-
 }
