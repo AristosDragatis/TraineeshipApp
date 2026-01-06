@@ -3,6 +3,7 @@ package myy803.traineeship_app.controllers;
 import myy803.traineeship_app.domain.Company;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.CompanyMapper;
+import myy803.traineeship_app.service.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,9 @@ public class CompanyController {
     @Autowired
     CompanyMapper companyMapper;
 
+    @Autowired
+    private CompanyService companyService;
+
 
     // ---------- Company User Stories
 
@@ -36,19 +40,18 @@ public class CompanyController {
         String username = authentication.getName();
         System.err.println("Logged use: " + username);
 
-        Company company = companyMapper.findByUsername(username);
-        if (company == null)
-            company = new Company(username);
+        // service call
+        Company company = companyService.getCompanyProfile(username);
 
         model.addAttribute("company", company);
-
         return "company/profile";
     }
 
     @RequestMapping("/save_profile")
     public String saveProfile(@ModelAttribute("profile") Company company, Model theModel) {
 
-        companyMapper.save(company);
+        // service call
+        companyService.companySaveProfile(company);
 
         return "company/dashboard";
     }
@@ -59,8 +62,7 @@ public class CompanyController {
         String username = authentication.getName();
         System.err.println("Logged use: " + username);
 
-        Company company = companyMapper.findByUsername(username);
-        List<TraineeshipPosition> positions = company.getAvailablePositions();
+        List<TraineeshipPosition> positions = companyService.listAvailablePositions(username);
 
         model.addAttribute("positions", positions);
 

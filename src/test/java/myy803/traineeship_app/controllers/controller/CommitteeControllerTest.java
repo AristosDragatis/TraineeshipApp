@@ -157,5 +157,4 @@ public class CommitteeControllerTest{
         // verification
         verify(model).addAttribute("traineeship_applications", traineeshipApplications);
     }
-
 }
