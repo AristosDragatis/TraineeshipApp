@@ -7,8 +7,6 @@ import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorA
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.mappers.CompanyMapper;
-import myy803.traineeship_app.mappers.ProfessorMapper;
 import myy803.traineeship_app.mappers.StudentMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,13 +44,7 @@ public class CommitteeControllerTest{
     private StudentMapper studentMapper;
 
     @Mock
-    private ProfessorMapper professorMapper;
-
-    @Mock
     private TraineeshipPositionsMapper positionsMapper;
-
-    @Mock
-    private CompanyMapper companyMapper;
 
     @Mock
     private Model model;
