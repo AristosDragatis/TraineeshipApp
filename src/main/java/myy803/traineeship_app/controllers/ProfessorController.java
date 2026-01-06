@@ -2,6 +2,7 @@ package myy803.traineeship_app.controllers;
 
 import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.mappers.ProfessorMapper;
+import myy803.traineeship_app.service.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,9 @@ public class ProfessorController {
 
     @Autowired
     private ProfessorMapper professorMapper;
+
+    @Autowired
+    private ProfessorService  professorService;
 
 
     // ---------- Professor User Stories
@@ -31,9 +35,7 @@ public class ProfessorController {
         String username = authentication.getName();
         System.err.println("Logged use: " + username);
 
-        Professor professor = professorMapper.findByUsername(username);
-        if (professor == null)
-            professor = new Professor(username);
+        Professor professor = professorService.retrieveProfessorProfile(username);
 
         model.addAttribute("professor", professor);
 
@@ -43,7 +45,7 @@ public class ProfessorController {
     @RequestMapping("/professor/save_profile")
     public String saveProfile(@ModelAttribute("profile") Professor professor, Model theModel) {
 
-        professorMapper.save(professor);
+        professorService.saveProfessorProfile(professor);
 
         return "professor/dashboard";
     }
