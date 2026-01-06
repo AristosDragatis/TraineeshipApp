@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class LogBook {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String date;
     private String content;
@@ -34,5 +35,13 @@ public class LogBook {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

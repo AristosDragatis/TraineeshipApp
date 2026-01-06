@@ -36,7 +36,7 @@ public class Student {
     @JoinColumn(name = "position_id", referencedColumnName = "id")
 	private TraineeshipPosition assignedTraineeship;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "logbook",  cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<LogBook> logBooks;
 	
 	public Student() {

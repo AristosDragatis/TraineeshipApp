@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Traineeship Logbook</title>
+</head>
+<body>
+<h2>Ημερολόγιο Πρακτικής Άσκησης</h2>
+
+<div style="margin-bottom: 30px;">
+    <h3>Προσθήκη Νέας Αναφοράς</h3>
+    <form th:action="@{/student/save_logbook}" method="post">
+        <textarea name="content" rows="5" cols="50" placeholder="Περιγράψτε τι κάνατε σήμερα..." required></textarea>
+        <br>
+        <button type="submit">Αποθήκευση</button>
+    </form>
+</div>
+
+<hr>
+
+<div>
+    <h3>Το Ιστορικό μου</h3>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Ημερομηνία</th>
+            <th>Δραστηριότητα</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${entries}">
+            <td th:text="${entry.date}">01/01/2026</td>
+            <td th:text="${entry.content}">Εδώ θα εμφανιστεί το κείμενό σου</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<a th:href="@{/student/dashboard}">Επιστροφή στο Dashboard</a>
+</body>
+</html>

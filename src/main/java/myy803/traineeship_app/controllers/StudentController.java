@@ -1,7 +1,7 @@
 package myy803.traineeship_app.controllers;
 
+import myy803.traineeship_app.domain.LogBook;
 import myy803.traineeship_app.domain.Student;
-import myy803.traineeship_app.mappers.StudentMapper;
 import myy803.traineeship_app.service.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RequestMapping("/student/")
 @Controller
@@ -52,9 +55,21 @@ public class StudentController {
 
     // student logbook user story
     @RequestMapping("/logbook")
-    public String logbook(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public String showLogbook(Model model){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
+
+        List<LogBook> entries = studentService.getStudentLogBook(username);
+        model.addAttribute("entries", entries);
         return "student/logbook";
+    }
+
+
+    @RequestMapping("/save_logbook")
+    public String saveEntry(@RequestParam("content") String content, Model model){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        studentService.addEntryToLogBook(username,content);
+        return "redirect:/student/logbook";
     }
 }
