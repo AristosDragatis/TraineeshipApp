@@ -1,6 +1,8 @@
 package myy803.traineeship_app.service.services;
 
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
+import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
+import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.StudentMapper;
@@ -19,6 +21,8 @@ public class TraineeshipService {
 
     @Autowired
     private TraineeshipPositionsMapper positionsMapper;
+    @Autowired
+    private SupervisorAssigmentFactory supervisorAssigmentFactory;
 
 
     // assign position to student
@@ -34,5 +38,12 @@ public class TraineeshipService {
         student.setLookingForTraineeship(false);
 
         positionsMapper.save(position);
+    }
+
+
+    // assign supervised position to professor
+    public void assignSupervisor(Integer positionId, String strategy){
+        SupervisorAssignmentStrategy assignmentStrategy = supervisorAssigmentFactory.create(strategy);
+        assignmentStrategy.assign(positionId);
     }
 }

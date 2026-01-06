@@ -74,12 +74,8 @@ public class CommitteeController {
             @RequestParam("applicant_username") String studentUsername,
             Model model) {
 
-        Student student = studentMapper.findByUsername(studentUsername);
-        TraineeshipPosition position = positionsMapper.findById(positionId).get();
-
         // call service layer
         traineeshipService.assignPositionToStudent(positionId, studentUsername);
-
 
         model.addAttribute("position_id", positionId);
 
@@ -92,8 +88,8 @@ public class CommitteeController {
             @RequestParam("strategy") String strategy,
             Model model) {
 
-        SupervisorAssignmentStrategy assignmentStrategy = supervisorAssigmentFactory.create(strategy);
-        assignmentStrategy.assign(positionId);
+        // call the service layer to assign supervisor
+        traineeshipService.assignSupervisor(positionId, strategy);
 
         return "committee/dashboard";
     }
