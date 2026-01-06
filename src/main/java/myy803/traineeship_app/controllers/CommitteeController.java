@@ -1,0 +1,100 @@
+package myy803.traineeship_app.controllers;
+
+import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
+import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
+import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
+import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
+import myy803.traineeship_app.domain.Student;
+import myy803.traineeship_app.domain.TraineeshipPosition;
+import myy803.traineeship_app.mappers.StudentMapper;
+import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Controller
+public class CommitteeController {
+
+
+    @Autowired
+    private StudentMapper studentMapper;
+
+    @Autowired
+    private PositionsSearchFactory positionsSearchFactory;
+
+    @Autowired
+    private TraineeshipPositionsMapper positionsMapper;
+
+    @Autowired
+    SupervisorAssigmentFactory supervisorAssigmentFactory;
+
+
+    // ---------- Committee User Stories
+
+    @RequestMapping("/committee/dashboard")
+    public String getCommitteeDashboard(){
+
+        return "committee/dashboard";
+    }
+
+    @RequestMapping("/committee/list_traineeship_applications")
+    public String listTraineeshipApplications(Model model) {
+        List<Student> traineeshipApplications = studentMapper.findByLookingForTraineeshipTrue();
+
+        model.addAttribute("traineeship_applications", traineeshipApplications);
+        return "committee/traineeship_applications";
+    }
+
+    @RequestMapping("/committee/find_positions")
+    public String findPositions(
+            @RequestParam("selected_student_id") String studentUsername,
+            @RequestParam("strategy") String strategy, Model model) {
+
+        PositionsSearchStrategy searchStrategy = positionsSearchFactory.create(strategy);
+        List<TraineeshipPosition> positions = searchStrategy.search(studentUsername);
+
+        model.addAttribute("positions", positions);
+        model.addAttribute("student_username", studentUsername);
+
+        return "committee/available_positions";
+    }
+
+    @RequestMapping("/committee/assign_position")
+    public String assignPosition(
+            @RequestParam("selected_position_id") Integer positionId,
+            @RequestParam("applicant_username") String studentUsername,
+            Model model) {
+
+        Student student = studentMapper.findByUsername(studentUsername);
+        TraineeshipPosition position = positionsMapper.findById(positionId).get();
+
+        position.setAssigned(true);
+        position.setStudent(student);
+
+        student.setAssignedTraineeship(position);
+        student.setLookingForTraineeship(false);
+
+        positionsMapper.save(position);
+
+        model.addAttribute("position_id", positionId);
+
+        return "committee/supervisor_assignment";
+    }
+
+    @RequestMapping("/committee/assign_supervisor")
+    public String assignSupervisor(
+            @RequestParam("selected_position_id") Integer positionId,
+            @RequestParam("strategy") String strategy,
+            Model model) {
+
+        SupervisorAssignmentStrategy assignmentStrategy = supervisorAssigmentFactory.create(strategy);
+        assignmentStrategy.assign(positionId);
+
+        return "committee/dashboard";
+    }
+
+}
