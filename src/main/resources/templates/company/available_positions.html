@@ -49,9 +49,14 @@
 				<td th:text="${position.toDate}" />	
 				<td th:text="${position.skills}" />
 				<td th:text="${position.topics}" />
-				
+
+				<td>
+					<a th:href="@{/company/delete_position(positionId=${position.id})}"
+					   onclick="return confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη θέση;')"
+					   style="color: red;">Διαγραφή</a>
+				</td>
 			</tr>
-		</tbody>		
+		</tbody>
 	</table>
 	
 	<a th:href="@{/company/dashboard}">Back to Company Dashboard</a>

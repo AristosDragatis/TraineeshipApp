@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,9 +19,6 @@ import java.util.List;
 @RequestMapping("/company/")
 @Controller
 public class CompanyController {
-
-    @Autowired
-    CompanyMapper companyMapper;
 
     @Autowired
     private CompanyService companyService;
@@ -90,4 +88,27 @@ public class CompanyController {
 
         return "redirect:/company/dashboard";
     }
+
+    @RequestMapping("/list_assigned_positions")
+    public String listAssignedPositions(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        List<TraineeshipPosition> assignedList = companyService.getAssignedPositions(username);
+        model.addAttribute("assignedPositions", assignedList);
+
+        return "company/assigned_positions";
+
+    }
+
+    @RequestMapping("/delete_position")
+    public String deletePosition(@RequestParam("positionId") Integer positionId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        companyService.deletePosition(positionId, username);
+
+        return "redirect:/company/list_available_positions";
+    }
+
 }
