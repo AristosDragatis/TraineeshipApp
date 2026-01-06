@@ -85,10 +85,8 @@ public class CompanyController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        Company company = companyMapper.findByUsername(username);
-        position.setCompany(company);
-        company.addPosition(position);
-        companyMapper.save(company);
+        // call service layer
+        companyService.savePosition(position, username);
 
         return "redirect:/company/dashboard";
     }

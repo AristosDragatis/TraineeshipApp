@@ -37,4 +37,13 @@ public class CompanyService {
             }
             return company.getAvailablePositions();
     }
+
+    // save position
+    public void savePosition(TraineeshipPosition position, String username){
+
+        Company company = companyMapper.findByUsername(username);
+        position.setCompany(company);
+        company.addPosition(position);
+        companyMapper.save(company);
+    }
 }
