@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+
+@RequestMapping("/company/")
 @Controller
 public class CompanyController {
 
@@ -22,13 +24,13 @@ public class CompanyController {
 
     // ---------- Company User Stories
 
-    @RequestMapping("/company/dashboard")
+    @RequestMapping("/dashboard")
     public String getCompanyDashboard(){
 
         return "company/dashboard";
     }
 
-    @RequestMapping("/company/profile")
+    @RequestMapping("/profile")
     public String retrieveCompanyProfile(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -43,7 +45,7 @@ public class CompanyController {
         return "company/profile";
     }
 
-    @RequestMapping("/company/save_profile")
+    @RequestMapping("/save_profile")
     public String saveProfile(@ModelAttribute("profile") Company company, Model theModel) {
 
         companyMapper.save(company);
@@ -51,7 +53,7 @@ public class CompanyController {
         return "company/dashboard";
     }
 
-    @RequestMapping("/company/list_available_positions")
+    @RequestMapping("/list_available_positions")
     public String listAvailablePositions(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -65,7 +67,7 @@ public class CompanyController {
         return "company/available_positions";
     }
 
-    @RequestMapping("/company/show_position_form")
+    @RequestMapping("/show_position_form")
     String showPositionForm(Model model) {
 
         TraineeshipPosition position = new TraineeshipPosition();
@@ -76,7 +78,7 @@ public class CompanyController {
 
     }
 
-    @RequestMapping("/company/save_position")
+    @RequestMapping("/save_position")
     public String savePosition(@ModelAttribute("position") TraineeshipPosition position, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
