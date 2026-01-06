@@ -25,6 +25,9 @@ public class TraineeshipService {
     @Autowired
     private SupervisorAssigmentFactory supervisorAssigmentFactory;
 
+    public List<Student> listTraineeshipApplications(){
+        return studentMapper.findByLookingForTraineeshipTrue();
+    }
 
     public List<TraineeshipPosition> findPositionsForStudent(String username, String strategy){
         PositionsSearchStrategy searchStrategy = positionsSearchFactory.create(strategy);

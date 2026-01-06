@@ -48,7 +48,7 @@ public class CommitteeController {
 
     @RequestMapping("/list_traineeship_applications")
     public String listTraineeshipApplications(Model model) {
-        List<Student> traineeshipApplications = studentMapper.findByLookingForTraineeshipTrue();
+        List<Student> traineeshipApplications = traineeshipService.listTraineeshipApplications();
 
         model.addAttribute("traineeship_applications", traineeshipApplications);
         return "committee/traineeship_applications";
