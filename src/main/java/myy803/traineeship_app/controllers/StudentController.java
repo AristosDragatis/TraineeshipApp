@@ -11,12 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/student/")
 @Controller
 public class StudentController {
-
-
-    @Autowired
-    private StudentMapper studentMapper;
 
     @Autowired
     private StudentService studentService;
@@ -24,13 +21,13 @@ public class StudentController {
 
     // ---------- Student User Stories
 
-    @RequestMapping("/student/dashboard")
+    @RequestMapping("/dashboard")
     public String getStudentDashboard(){
 
         return "student/dashboard";
     }
 
-    @RequestMapping("/student/profile")
+    @RequestMapping("/profile")
     public String retrieveStudentProfile(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String studentUsername = authentication.getName();
@@ -44,7 +41,7 @@ public class StudentController {
         return "student/profile";
     }
 
-    @RequestMapping("/student/save_profile")
+    @RequestMapping("/save_profile")
     public String saveProfile(@ModelAttribute("student") Student student, Model theModel) {
 
         studentService.saveStudentProfile(student);
@@ -53,4 +50,11 @@ public class StudentController {
     }
 
 
+    // student logbook user story
+    @RequestMapping("/logbook")
+    public String logbook(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return "student/logbook";
+    }
 }

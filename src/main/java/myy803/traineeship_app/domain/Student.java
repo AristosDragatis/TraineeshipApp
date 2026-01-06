@@ -2,6 +2,8 @@ package myy803.traineeship_app.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="students")
 public class Student {
@@ -33,6 +35,9 @@ public class Student {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id", referencedColumnName = "id")
 	private TraineeshipPosition assignedTraineeship;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "logbook",  cascade = CascadeType.ALL)
+	private List<LogBook> logBooks;
 	
 	public Student() {
 		super();
