@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>View Evaluation</title>
+</head>
+<body>
+<div class="container">
+    <h2>Evaluation Details</h2>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Motivation:</strong> <span th:text="${evaluation.motivation}"></span> / 5</p>
+            <p><strong>Efficiency:</strong> <span th:text="${evaluation.efficiency}"></span> / 5</p>
+            <p><strong>Effectiveness:</strong> <span th:text="${evaluation.effectiveness}"></span> / 5</p>
+        </div>
+    </div>
+    <br>
+    <a th:href="@{/company/show_evaluation_form(positionId=${positionId})}" class="btn btn-warning">Edit Evaluation</a>
+    <a th:href="@{/company/list_assigned_positions}" class="btn btn-secondary">Back to List</a>
+</div>
+</body>
+</html>

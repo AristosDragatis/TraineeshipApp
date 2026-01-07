@@ -1,6 +1,7 @@
 package myy803.traineeship_app.controllers;
 
 import myy803.traineeship_app.domain.Company;
+import myy803.traineeship_app.domain.Evaluation;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.CompanyMapper;
 import myy803.traineeship_app.service.services.CompanyService;
@@ -109,6 +110,45 @@ public class CompanyController {
         companyService.deletePosition(positionId, username);
 
         return "redirect:/company/list_available_positions";
+    }
+
+    @RequestMapping("/save_evaluation")
+    public String saveEvaluation(@RequestParam("positionId") Integer positionId,
+                                 @ModelAttribute("evaluation")Evaluation evaluation){
+
+        // call the service method
+        companyService.fillEvaluation(positionId, evaluation);
+
+        return "redirect:/company/list_assigned_positions";
+
+    }
+
+    @RequestMapping("/show_evaluation_form")
+    public String showEvaluationForm(@RequestParam("positionId") Integer positionId,Model model){
+
+        Evaluation evaluation = companyService.getCompanyEvaluation(positionId);
+
+        if (evaluation == null) {
+            evaluation = new Evaluation();
+        }
+
+        model.addAttribute("positionId", positionId);
+        model.addAttribute("evaluation", evaluation);
+
+        return "company/evaluation_form";
+    }
+
+    @RequestMapping("/view_evaluation")
+    public String viewEvaluationForm(@RequestParam("positionId") Integer positionId, Model model){
+        Evaluation evaluation = companyService.getCompanyEvaluation(positionId);
+
+        if(evaluation == null){
+            return "redirect:/company/show_evaluation_form?positionId=" + positionId;
+        }
+
+        model.addAttribute("evaluation", evaluation);
+        model.addAttribute("positionId", positionId);
+        return "company/view_evaluation";
     }
 
 }

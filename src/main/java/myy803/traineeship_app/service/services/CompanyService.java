@@ -1,6 +1,8 @@
 package myy803.traineeship_app.service.services;
 
 import myy803.traineeship_app.domain.Company;
+import myy803.traineeship_app.domain.Evaluation;
+import myy803.traineeship_app.domain.EvaluationType;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.CompanyMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
@@ -83,5 +85,45 @@ public class CompanyService {
         traineeshipPositionsMapper.deleteById(positionId);
         companyMapper.save(company);
 
+    }
+
+
+    public void fillEvaluation(Integer positionId, Evaluation evaluation) {
+
+        // find the position from the database
+        TraineeshipPosition position = traineeshipPositionsMapper.findById(positionId)
+                .orElseThrow(() -> new RuntimeException("Position not found"));
+
+        // check if position has an assisgned student
+        if(position.getStudent() == null){
+            throw new RuntimeException("Cannot evaluate a position without an assigned student");
+        }
+
+        // company evaluation
+        evaluation.setEvaluationType(EvaluationType.COMPANY_EVALUATION);
+
+        // if exists just update it
+        Evaluation existing = getCompanyEvaluation(positionId);
+        if (existing != null) {
+            existing.setMotivation(evaluation.getMotivation());
+            existing.setEfficiency(evaluation.getEfficiency());
+            existing.setEffectiveness(evaluation.getEffectiveness());
+        } else {
+            position.getEvaluations().add(evaluation);
+        }
+
+        traineeshipPositionsMapper.save(position);
+    }
+
+
+    public Evaluation getCompanyEvaluation(Integer positionId){
+        TraineeshipPosition position = traineeshipPositionsMapper.findById(positionId)
+                .orElseThrow(() -> new RuntimeException("Position not found"));
+
+
+        return position.getEvaluations().stream()
+                .filter(e -> e.getEvaluationType() == EvaluationType.COMPANY_EVALUATION)
+                .findFirst()
+                .orElse(null);
     }
 }
