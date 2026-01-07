@@ -1,5 +1,6 @@
 package myy803.traineeship_app.controllers;
 
+import myy803.traineeship_app.domain.Evaluation;
 import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.ProfessorMapper;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -65,5 +67,35 @@ public class ProfessorController {
         model.addAttribute("positions", positions); // send the list to Thymeleaf
 
         return  "professor/list_traineeships";
+    }
+
+
+    @RequestMapping("professor/show_evaluation_form")
+    public String showEvaluationForm(@RequestParam("positionId") Integer positionId, Model model){
+
+        // try to get an existing professors evaluation for this position
+        // this ensures that if the professor wants to edit their evaluations, they see the old ones
+        Evaluation evaluation = professorService.getProfessorEvaluation(positionId);
+
+
+        if(evaluation == null){
+            evaluation = new Evaluation();
+        }
+
+
+        model.addAttribute("positionId", positionId);
+        model.addAttribute("evaluation", evaluation);
+
+        return  "professor/evaluation_form";
+    }
+
+    @RequestMapping("professor/save_evaluation")
+    public String saveEvaluation(@RequestParam("positionId") Integer positionId,
+                                 @ModelAttribute("evaluation") Evaluation evaluation){
+
+        // call the service to save/update the evaluation
+        professorService.fillEvaluation(positionId, evaluation);
+
+        return "redirect:/professor/list_traineeships";
     }
 }
