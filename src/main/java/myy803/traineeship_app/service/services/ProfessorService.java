@@ -1,9 +1,13 @@
 package myy803.traineeship_app.service.services;
 
 import myy803.traineeship_app.domain.Professor;
+import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.ProfessorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProfessorService {
@@ -25,5 +29,16 @@ public class ProfessorService {
     public void saveProfessorProfile(Professor professor){
 
         professorMapper.save(professor);
+    }
+
+
+    public List<TraineeshipPosition> listSupervisedPositions(String username){
+        Professor professor = professorMapper.findByUsername(username);
+
+        if(professor.getSupervisedPositions() == null){
+            return new ArrayList<>();
+        }
+
+        return professor.getSupervisedPositions();
     }
 }

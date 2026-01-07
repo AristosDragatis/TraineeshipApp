@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Supervised Positions</title>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4">My Supervised Traineeship Positions</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Position Title</th>
+            <th>Company</th>
+            <th>Student</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pos : ${positions}">
+            <td th:text="${pos.title}">Title</td>
+
+            <td th:text="${pos.company != null ? pos.company.companyName : 'N/A'}">Company</td>
+
+            <td th:text="${pos.student != null ? pos.student.studentName : 'Not Assigned'}">Student</td>
+
+            <td>
+                <span th:if="${pos.assigned}" class="badge badge-success">Assigned</span>
+                <span th:if="${!pos.assigned}" class="badge badge-secondary">Open</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/professor/dashboard}" class="btn btn-primary">Back to Dashboard</a>
+</div>
+</body>
+</html>
