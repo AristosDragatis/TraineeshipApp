@@ -26,6 +26,12 @@ public class Evaluation {
 	private
 	int effectiveness;
 
+	@Column(name="facilities")
+	private int facilities;
+
+	@Column(name="guidance")
+	private int guidance;
+
 
 	public Integer getId() {
 		return id;
@@ -65,5 +71,21 @@ public class Evaluation {
 
 	public void setEffectiveness(int effectiveness) {
 		this.effectiveness = effectiveness;
+	}
+
+	public int getFacilities() {
+		return facilities;
+	}
+
+	public void setFacilities(int facilities) {
+		this.facilities = facilities;
+	}
+
+	public int getGuidance() {
+		return guidance;
+	}
+
+	public void setGuidance(int guidance) {
+		this.guidance = guidance;
 	}
 }
