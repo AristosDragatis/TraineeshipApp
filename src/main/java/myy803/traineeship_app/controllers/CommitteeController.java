@@ -4,14 +4,19 @@ import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactor
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
+import myy803.traineeship_app.domain.Evaluation;
+import myy803.traineeship_app.domain.EvaluationType;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import myy803.traineeship_app.mappers.StudentMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 import myy803.traineeship_app.service.services.TraineeshipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -92,4 +97,42 @@ public class CommitteeController {
 
         return "committee/dashboard";
     }
+
+    @RequestMapping("/list_assigned_traineeships")
+    public String listAssignedTraineeships(Model model){
+
+        List<TraineeshipPosition> inProgress = traineeshipService.listProgressTraineeships();
+        model.addAttribute("positions", inProgress);
+        return "committee/list_assigned_traineeships";
+    }
+
+    @RequestMapping("/view_details")
+    public String viewDetails(@RequestParam("id") Integer id, Model model) {
+        TraineeshipPosition position = traineeshipService.getPositionDetails(id);
+
+        // company evaluation
+        Evaluation companyEval = position.getEvaluations().stream()
+                .filter(e -> e.getEvaluationType() == EvaluationType.COMPANY_EVALUATION)
+                .findFirst().orElse(null);
+
+        // professor evaluation
+        Evaluation professorEval = position.getEvaluations().stream()
+                .filter(e -> e.getEvaluationType() == EvaluationType.PROFESSOR_EVALUATION)
+                .findFirst().orElse(null);
+
+        model.addAttribute("position", position);
+        model.addAttribute("companyEval", companyEval);
+        model.addAttribute("professorEval", professorEval);
+
+        return "committee/view_details";
+    }
+
+    @PostMapping("/complete_process")
+    public String completeProcess(@RequestParam("id") Integer id,
+                                  @RequestParam("passFail") boolean passFail) {
+        traineeshipService.finalizeTraineeship(id, passFail);
+        return "redirect:/committee/list_assigned_traineeships";
+    }
+
+
 }

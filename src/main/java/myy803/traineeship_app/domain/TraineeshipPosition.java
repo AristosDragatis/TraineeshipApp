@@ -38,7 +38,7 @@ public class TraineeshipPosition {
 	private String studentLogbook;
 	
 	@Column(name="pass_fail")
-	private boolean passFailGrade;
+	private Boolean passFailGrade;
 	
 	@OneToOne(fetch = FetchType.EAGER, 
 			mappedBy = "assignedTraineeship",
@@ -153,14 +153,6 @@ public class TraineeshipPosition {
 		this.studentLogbook = studentLogBook;
 	}
 
-	public boolean isPassFailGrade() {
-		return passFailGrade;
-	}
-
-	public void setPassFailGrade(boolean passFailGrade) {
-		this.passFailGrade = passFailGrade;
-	}
-
 	public Student getStudent() {
 		return student;
 	}
@@ -193,4 +185,11 @@ public class TraineeshipPosition {
 		this.evaluations = evaluations;
 	}
 
+	public Boolean getPassFailGrade() {
+		return passFailGrade;
+	}
+
+	public void setPassFailGrade(Boolean passFailGrade) {
+		this.passFailGrade = passFailGrade;
+	}
 }

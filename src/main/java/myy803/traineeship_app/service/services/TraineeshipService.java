@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TraineeshipService {
@@ -54,4 +55,34 @@ public class TraineeshipService {
         SupervisorAssignmentStrategy assignmentStrategy = supervisorAssigmentFactory.create(strategy);
         assignmentStrategy.assign(positionId);
     }
+
+    // list of assigned traineeships in progress
+    public List<TraineeshipPosition> listProgressTraineeships(){
+
+        // find all positions
+        List<TraineeshipPosition> allPositions = positionsMapper.findAll();
+
+        // in progress means it has a student assigned
+        return allPositions.stream()
+                .filter(pos -> pos.getStudent() != null)
+                .collect(Collectors.toList());
+    }
+
+    // us21 fetch all positions
+    public TraineeshipPosition getPositionDetails(Integer id){
+        return positionsMapper.findById(id)
+                .orElseThrow(() -> new RuntimeException("position not found"));
+    }
+
+    // passfail grading
+    public void finalizeTraineeship(Integer id, boolean passFail) {
+        TraineeshipPosition position = getPositionDetails(id);
+        position.setPassFailGrade(passFail);
+        positionsMapper.save(position);
+    }
+
+
+
+
+
 }

@@ -21,6 +21,7 @@
             <th>Company</th>
             <th>Student</th>
             <th>Status</th>
+            <th>Evaluation</th>
         </tr>
         </thead>
         <tbody>
@@ -35,7 +36,12 @@
                 <span th:if="${pos.assigned}" class="badge badge-success">Assigned</span>
                 <span th:if="${!pos.assigned}" class="badge badge-secondary">Open</span>
             </td>
+            <td th:if="${pos.student != null}">
+                <a th:href="@{/professor/show_evaluation_form(positionId=${pos.id})}"
+                   class="btn btn-warning btn-sm">Evaluate</a>
+            </td>
         </tr>
+
         </tbody>
     </table>
 

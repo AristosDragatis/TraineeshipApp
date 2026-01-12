@@ -27,10 +27,10 @@ public class Evaluation {
 	int effectiveness;
 
 	@Column(name="facilities")
-	private int facilities;
+	private Integer facilities;
 
 	@Column(name="guidance")
-	private int guidance;
+	private Integer guidance;
 
 
 	public Integer getId() {
@@ -73,19 +73,20 @@ public class Evaluation {
 		this.effectiveness = effectiveness;
 	}
 
-	public int getFacilities() {
+
+	public Integer getFacilities() {
 		return facilities;
 	}
 
-	public void setFacilities(int facilities) {
+	public void setFacilities(Integer facilities) {
 		this.facilities = facilities;
 	}
 
-	public int getGuidance() {
+	public Integer getGuidance() {
 		return guidance;
 	}
 
-	public void setGuidance(int guidance) {
+	public void setGuidance(Integer guidance) {
 		this.guidance = guidance;
 	}
 }

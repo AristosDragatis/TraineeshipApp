@@ -12,6 +12,29 @@
     <title>Evaluation Form</title>
 </head>
 <body>
+<form th:action="@{/professor/save_evaluation}" th:object="${evaluation}" method="post">
+    <input type="hidden" name="positionId" th:value="${positionId}" />
 
+    <h4>Student Performance</h4>
+    <label>Motivation (1-5):</label>
+    <input type="number" th:field="*{motivation}" min="1" max="5" class="form-control" required />
+
+    <label>Efficiency (1-5):</label>
+    <input type="number" th:field="*{efficiency}" min="1" max="5" class="form-control" required />
+
+    <label>Effectiveness (1-5):</label>
+    <input type="number" th:field="*{effectiveness}" min="1" max="5" class="form-control" required />
+
+    <hr>
+    <h4>Company Performance</h4>
+    <label>Facilities (1-5):</label>
+    <input type="number" th:field="*{facilities}" min="1" max="5" class="form-control" required />
+
+    <label>Guidance (1-5):</label>
+    <input type="number" th:field="*{guidance}" min="1" max="5" class="form-control" required />
+
+    <button type="submit" class="btn btn-success mt-3">Submit Evaluation</button>
+</form>
+<a th:href="@{/professor/list_traineeships}" class="btn btn-primary">Back to List Traineeships</a>
 </body>
 </html>

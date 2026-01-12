@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <title>List Assigned Traineeships</title>
+</head>
+<body>
+<div class="container">
+  <h2>In Progress Traineeships</h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Student</th>
+      <th>Position</th>
+      <th>Company</th>
+      <th>Supervisor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pos : ${positions}">
+      <td th:text="${pos.student.studentName}">Student</td>
+      <td th:text="${pos.title}">Position</td>
+      <td th:text="${pos.company.companyName}">Company</td>
+      <td th:text="${pos.supervisor?.professorName} ?: 'N/A'"></td>
+      <td>
+        <a th:href="@{/committee/view_details(id=${pos.id})}" class="btn btn-primary btn-sm">Select & Review</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<a th:href="@{/committee/dashboard}">Back to Committee Dashboard</a>
+</body>
+</html>

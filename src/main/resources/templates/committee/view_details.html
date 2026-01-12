@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Traineeship Review</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h2>Reviewing Traineeship: <span th:text="${position.title}"></span></h2>
+  <hr>
+
+  <div class="card mb-4">
+    <div class="card-header bg-dark text-white">Student Logbook</div>
+    <div class="card-body">
+      <p th:text="${position.getStudentLogbook()!= null ? position.getStudentLogbook(): 'No logbook entry available.'}"></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">Company Evaluation</div>
+        <div class="card-body" th:if="${companyEval != null}">
+          <p>Motivation: <span th:text="${companyEval.motivation}"></span>/5</p>
+          <p>Facilities: <span th:text="${companyEval.facilities}"></span>/5</p>
+          <p>Guidance: <span th:text="${companyEval.guidance}"></span>/5</p>
+        </div>
+        <div class="card-body text-muted" th:unless="${companyEval != null}">
+          Pending company evaluation...
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">Professor Evaluation</div>
+        <div class="card-body" th:if="${professorEval != null}">
+          <p>Efficiency: <span th:text="${professorEval.efficiency}"></span>/5</p>
+          <p>Effectiveness: <span th:text="${professorEval.effectiveness}"></span>/5</p>
+          <p>Motivation: <span th:text="${professorEval.motivation}"></span>/5</p>
+        </div>
+        <div class="card-body text-muted" th:unless="${professorEval != null}">
+          Pending professor evaluation...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${position.passFailGrade == null}" class="card border-warning mb-4">
+    <div class="card-header bg-warning">Submit Final Decision</div>
+    <div class="card-body">
+      <form th:action="@{/committee/complete_process}" method="post">
+        <input type="hidden" name="id" th:value="${position.id}" />
+        <div class="form-group col-md-4 pl-0">
+          <label>Final Mark:</label>
+          <select name="passFail" class="form-control">
+            <option value="true">PASS</option>
+            <option value="false">FAIL</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary"
+                onclick="return confirm('Are you sure? This will close the traineeship.')">
+          Finalize Traineeship
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div th:if="${position.passFailGrade != null}"
+       th:classappend="${position.passFailGrade} ? 'card border-success' : 'card border-danger'" class="card mb-4">
+    <div class="card-header text-white"
+         th:classappend="${position.passFailGrade} ? 'bg-success' : 'bg-danger'">
+      Traineeship Completed
+    </div>
+    <div class="card-body text-center">
+      <h3>Final Mark:
+        <span th:text="${position.passFailGrade ? 'PASS' : 'FAIL'}"
+              th:class="${position.passFailGrade ? 'text-success' : 'text-danger'}"></span>
+      </h3>
+      <p class="text-muted">This traineeship record is now closed.</p>
+    </div>
+  </div>
+
+  <a th:href="@{/committee/list_assigned_traineeships}" class="btn btn-secondary">Back to List</a>
+</div>
+</body>
+</html>
