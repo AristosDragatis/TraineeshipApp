@@ -133,6 +133,4 @@ public class CommitteeController {
         traineeshipService.finalizeTraineeship(id, passFail);
         return "redirect:/committee/list_assigned_traineeships";
     }
-
-
 }
