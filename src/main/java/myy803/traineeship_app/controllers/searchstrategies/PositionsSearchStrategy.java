@@ -5,5 +5,5 @@ import java.util.List;
 import myy803.traineeship_app.domain.*;
 
 public interface PositionsSearchStrategy {
-	List<TraineeshipPosition> search(String applicantUsername);
+	List<TraineeshipPosition> filter(List<TraineeshipPosition> allPositions, Student student);
 }

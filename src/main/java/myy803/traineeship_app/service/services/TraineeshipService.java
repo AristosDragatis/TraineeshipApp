@@ -1,5 +1,6 @@
 package myy803.traineeship_app.service.services;
 
+import myy803.traineeship_app.controllers.searchstrategies.AbstractPositionsSearch;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
@@ -35,9 +36,13 @@ public class TraineeshipService {
         return studentMapper.findByLookingForTraineeshipTrue();
     }
 
-    public List<TraineeshipPosition> findPositionsForStudent(String username, String strategy){
-        PositionsSearchStrategy searchStrategy = positionsSearchFactory.create(strategy);
-        return searchStrategy.search(username);
+    public List<TraineeshipPosition> findPositionsForStudent(String username, String strategyType){
+        Student student = studentMapper.findByUsername(username);
+        List<TraineeshipPosition> allPositions = positionsMapper.findAll();
+        
+        AbstractPositionsSearch searchStrategy = (AbstractPositionsSearch) positionsSearchFactory.create(strategyType);
+        
+        return searchStrategy.filter(allPositions, student);
     }
 
     // assign position to student
