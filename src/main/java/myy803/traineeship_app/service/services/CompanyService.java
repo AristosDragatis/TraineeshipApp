@@ -90,7 +90,7 @@ public class CompanyService {
 
     public void fillEvaluation(Integer positionId, Evaluation evaluation) {
 
-        // find the position from the database
+        // find the position from the database or throw an exception if not found
         TraineeshipPosition position = traineeshipPositionsMapper.findById(positionId)
                 .orElseThrow(() -> new RuntimeException("Position not found"));
 
@@ -102,7 +102,7 @@ public class CompanyService {
         // company evaluation
         evaluation.setEvaluationType(EvaluationType.COMPANY_EVALUATION);
 
-        // if exists just update it
+        // if exists just update it else add a new one
         Evaluation existing = getCompanyEvaluation(positionId);
         if (existing != null) {
             existing.setMotivation(evaluation.getMotivation());

@@ -10,13 +10,6 @@
   <h2>Reviewing Traineeship: <span th:text="${position.title}"></span></h2>
   <hr>
 
-  <div class="card mb-4">
-    <div class="card-header bg-dark text-white">Student Logbook</div>
-    <div class="card-body">
-      <p th:text="${position.getStudentLogbook()!= null ? position.getStudentLogbook(): 'No logbook entry available.'}"></p>
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-md-6">
       <div class="card mb-4">
@@ -82,7 +75,7 @@
     </div>
   </div>
 
-  <a th:href="@{/committee/list_assigned_traineeships}" class="btn btn-secondary">Back to List</a>
+  <a th:href="@{/committee/list_assigned_traineeships}" class="btn btn-primary">Back to List Traineeships</a>
 </div>
 </body>
 </html>
