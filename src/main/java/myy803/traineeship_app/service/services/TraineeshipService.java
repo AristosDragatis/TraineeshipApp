@@ -4,8 +4,10 @@ import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactor
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
+import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
+import myy803.traineeship_app.mappers.ProfessorMapper;
 import myy803.traineeship_app.mappers.StudentMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,10 @@ public class TraineeshipService {
     @Autowired
     private TraineeshipPositionsMapper positionsMapper;
     @Autowired
-    private SupervisorAssigmentFactory supervisorAssigmentFactory;
+    private ProfessorMapper professorMapper;
+    @Autowired
+    private SupervisorAssigmentFactory assigmentFactory;
+
 
     public List<Student> listTraineeshipApplications(){
         return studentMapper.findByLookingForTraineeshipTrue();
@@ -51,9 +56,16 @@ public class TraineeshipService {
     }
 
     // assign supervised position to professor
-    public void assignSupervisor(Integer positionId, String strategy){
-        SupervisorAssignmentStrategy assignmentStrategy = supervisorAssigmentFactory.create(strategy);
-        assignmentStrategy.assign(positionId);
+    public void assignSupervisor(Integer positionId, String strategyType){
+        TraineeshipPosition position = positionsMapper.findById(positionId).get();
+        List<Professor> professors = professorMapper.findAll();
+        
+        
+        SupervisorAssignmentStrategy strategy = assigmentFactory.create(strategyType);
+        
+        strategy.performAssignment(professors, position);
+        
+        positionsMapper.save(position);
     }
 
     // list of assigned traineeships in progress

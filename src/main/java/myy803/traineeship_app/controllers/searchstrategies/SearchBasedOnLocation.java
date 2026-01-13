@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 
-@Component("location")
+@Component
 public class SearchBasedOnLocation extends AbstractPositionsSearch {
 
 	

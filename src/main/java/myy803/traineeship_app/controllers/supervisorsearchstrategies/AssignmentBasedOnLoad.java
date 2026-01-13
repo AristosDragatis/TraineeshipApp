@@ -6,7 +6,7 @@ import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 
 
-@Component("load")
+@Component
 public class AssignmentBasedOnLoad extends AbstractSupervisorAssignment{
 
 	@Override

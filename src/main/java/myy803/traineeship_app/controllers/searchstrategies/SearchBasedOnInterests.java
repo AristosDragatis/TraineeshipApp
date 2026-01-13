@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 
-@Component("interests")
+@Component
 public class SearchBasedOnInterests extends AbstractPositionsSearch {
 	
 	@Override

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 
-@Component("interests")
+@Component
 public class AssignmentBasedOnInterests extends AbstractSupervisorAssignment{
 	
 	@Override
