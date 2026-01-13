@@ -9,7 +9,6 @@ import myy803.traineeship_app.domain.TraineeshipPosition;
 @Component("load")
 public class AssignmentBasedOnLoad extends AbstractSupervisorAssignment{
 
-	
 	@Override
 	protected Professor findCandidate(List<Professor> professors, TraineeshipPosition position) {
 		Professor candidateSupervisor = professors.get(0);

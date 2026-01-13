@@ -11,29 +11,29 @@ import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 
 
 public abstract class AbstractSupervisorAssignment implements SupervisorAssignmentStrategy{
-	@Autowired protected TraineeshipPositionsMapper positionsMapper;
-	@Autowired protected ProfessorMapper professorMapper;
 	
+	@Autowired
+	protected TraineeshipPositionsMapper positionsMapper;
 	
+	@Autowired
+	protected ProfessorMapper professorMapper;
+
 	@Override
 	public final void assign(Integer positionId) {
-		// same steps of the algorithm
+
 		TraineeshipPosition position = positionsMapper.findById(positionId).get();
-		List<Professor> professors = professorMapper.findAll();
+        List<Professor> professors = professorMapper.findAll();
 		
-		// step that changes 
+		// step that changes for subclasses (hook)
 		Professor selected = findCandidate(professors, position);
 		
+		// assignment 
 		if(selected != null) {
 			position.setSupervisor(selected);
 			selected.addPosition(position);
 			positionsMapper.save(position);
 		}
-		
-		
 	}
 	
 	protected abstract Professor findCandidate(List<Professor> professors, TraineeshipPosition position);
-	
-	
 }

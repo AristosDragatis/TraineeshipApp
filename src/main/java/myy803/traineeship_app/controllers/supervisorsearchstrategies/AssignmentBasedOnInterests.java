@@ -8,7 +8,6 @@ import myy803.traineeship_app.domain.TraineeshipPosition;
 @Component("interests")
 public class AssignmentBasedOnInterests extends AbstractSupervisorAssignment{
 	
-	
 	@Override
 	protected Professor findCandidate(List<Professor> professors, TraineeshipPosition position) {
 		// splits the topics if it finds ( , )
