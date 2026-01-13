@@ -5,37 +5,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.mappers.StudentMapper;
-import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 
-@Component
-public class SearchBasedOnInterests implements PositionsSearchStrategy {
-	@Autowired
-	private TraineeshipPositionsMapper positionsMapper;
-	
-	@Autowired
-	private StudentMapper studentMapper;
+@Component("interests")
+public class SearchBasedOnInterests extends AbstractPositionsSearch {
 	
 	@Override
-	public List<TraineeshipPosition> search(String applicantUsername) {
+	protected List<TraineeshipPosition>  filterPositions(List<TraineeshipPosition> positions, Student student) {
 		
-		Student applicant = studentMapper.findByUsername(applicantUsername);
 		Set<TraineeshipPosition> matchingPositionsSet = new HashSet<TraineeshipPosition>();
+		String[] interests = student.getInterests().split("[,\\s+\\.]");
 		
-		String[] interests = applicant.getInterests().split("[,\\s+\\.]");
-		for(int i = 0; i < interests.length; i++) {
-			List<TraineeshipPosition> positions = positionsMapper.findByTopicsContainingAndIsAssignedFalse(
-					interests[i]
-							);
-			matchingPositionsSet.addAll(positions);
-		}
-		
-		return new ArrayList<TraineeshipPosition>(matchingPositionsSet);
+		for (TraineeshipPosition pos : positions) {
+            for (String interest : interests) {
+                if (pos.getTopics().contains(interest) && !pos.isAssigned()) {
+                    matchingPositionsSet.add(pos);
+                }
+            }
+        }
+        return new ArrayList<>(matchingPositionsSet);
 	}
 
 }

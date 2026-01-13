@@ -6,19 +6,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class PositionsSearchFactory {
 	@Autowired 
-	SearchBasedOnLocation searchBasedOnLocation;
+	private SearchBasedOnLocation searchBasedOnLocation;
 	
 	@Autowired
-	SearchBasedOnInterests searchBasedOnInterests;
+	private SearchBasedOnInterests searchBasedOnInterests;
 	
 	public PositionsSearchStrategy create(String strategy) {
-		switch (strategy) {
-		case "location":
-			return searchBasedOnLocation;
-		case "interests":
-			return searchBasedOnInterests;
-		default:
-			return searchBasedOnLocation;
-		}
+		if("location".equals(strategy)) return searchBasedOnLocation;
+		if("interests".equals(strategy)) return searchBasedOnInterests;
+		return searchBasedOnLocation; //default
 	}
 }

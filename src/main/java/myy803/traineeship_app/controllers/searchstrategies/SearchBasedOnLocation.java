@@ -1,42 +1,24 @@
 package myy803.traineeship_app.controllers.searchstrategies;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
-
-import myy803.traineeship_app.domain.Company;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.mappers.CompanyMapper;
-import myy803.traineeship_app.mappers.StudentMapper;
 
-@Component
-public class SearchBasedOnLocation implements PositionsSearchStrategy {
+@Component("location")
+public class SearchBasedOnLocation extends AbstractPositionsSearch {
 
-	@Autowired
-	private CompanyMapper companyMapper;
-	
-	@Autowired
-	private StudentMapper studentMapper;
 	
 	@Override
-	public List<TraineeshipPosition> search(String applicantUsername) {
+	protected List<TraineeshipPosition> filterPositions(List<TraineeshipPosition> positions, Student student) {
 		
-		Student applicant = studentMapper.findByUsername(applicantUsername);
-		Set<TraineeshipPosition> matchingPositionsSet = new HashSet<TraineeshipPosition>();
-
-		List<Company> companies = companyMapper.findByCompanyLocation(
-				applicant.getPreferredLocation()
-				);
-		
-		for(Company company : companies)
-			matchingPositionsSet.addAll(company.getAvailablePositions());
-		
-		return new ArrayList<TraineeshipPosition>(matchingPositionsSet);
+		return positions.stream()
+	            .filter(pos -> pos.getCompany().getCompanyLocation()
+	                .equalsIgnoreCase(student.getPreferredLocation()))
+	            .filter(pos -> !pos.isAssigned()) 
+	            .collect(Collectors.toList());
 	}
 
 }
