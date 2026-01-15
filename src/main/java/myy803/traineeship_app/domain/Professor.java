@@ -2,6 +2,7 @@ package myy803.traineeship_app.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,7 +18,8 @@ public class Professor {
 	
 	@Column(name="interests")
 	private String interests;
-	
+
+	@JsonIgnore
 	@OneToMany(
 			mappedBy = "supervisor",
 			cascade=CascadeType.ALL, 

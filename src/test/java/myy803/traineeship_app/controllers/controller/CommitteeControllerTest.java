@@ -13,8 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings; // ΝΕΟ IMPORT
-import org.mockito.quality.Strictness; // ΝΕΟ IMPORT
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.ui.Model;
 
 import myy803.traineeship_app.controllers.CommitteeController;
@@ -29,7 +29,7 @@ import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 import myy803.traineeship_app.service.services.TraineeshipService;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT) // <--- Η ΜΑΓΙΚΗ ΓΡΑΜΜΗ!
+@MockitoSettings(strictness = Strictness.LENIENT)
 class CommitteeControllerTest {
 
     @Mock 
@@ -75,7 +75,7 @@ class CommitteeControllerTest {
     void testFindPositions() {
         List<TraineeshipPosition> results = new ArrayList<>();
         when(positionsSearchFactory.create("interests")).thenReturn(mockSearchStrategy);
-        when(mockSearchStrategy.search("aris")).thenReturn(results);
+        when(mockSearchStrategy.filter("aris")).thenReturn(results);
 
         String view = controller.findPositions("aris", "interests", model);
 

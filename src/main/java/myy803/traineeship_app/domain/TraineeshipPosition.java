@@ -3,6 +3,7 @@ package myy803.traineeship_app.domain;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -53,6 +54,7 @@ public class TraineeshipPosition {
     @JoinColumn(name = "company_username", referencedColumnName = "username")	
 	private Company company;
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
 	private List<Evaluation> evaluations;

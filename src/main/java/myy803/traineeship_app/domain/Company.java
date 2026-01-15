@@ -3,6 +3,7 @@ package myy803.traineeship_app.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -18,7 +19,8 @@ public class Company {
 	
 	@Column(name="company_location")
 	private String companyLocation;
-	
+
+	@JsonIgnore
 	@OneToMany(
 			mappedBy = "company",
 			cascade=CascadeType.ALL, 

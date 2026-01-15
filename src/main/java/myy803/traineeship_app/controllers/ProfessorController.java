@@ -25,9 +25,6 @@ public class ProfessorController {
     @Autowired
     private ProfessorService  professorService;
 
-
-    // ---------- Professor User Stories
-
     @RequestMapping("/professor/dashboard")
     public String getProfessorDashboard(){
 

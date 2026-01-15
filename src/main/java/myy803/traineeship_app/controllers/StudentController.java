@@ -21,9 +21,6 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-
-    // ---------- Student User Stories
-
     @RequestMapping("/dashboard")
     public String getStudentDashboard(){
 

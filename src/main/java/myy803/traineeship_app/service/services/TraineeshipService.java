@@ -2,7 +2,6 @@ package myy803.traineeship_app.service.services;
 
 import myy803.traineeship_app.controllers.searchstrategies.AbstractPositionsSearch;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
-import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
 import myy803.traineeship_app.domain.Professor;

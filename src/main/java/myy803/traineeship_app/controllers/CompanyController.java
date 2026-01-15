@@ -3,7 +3,6 @@ package myy803.traineeship_app.controllers;
 import myy803.traineeship_app.domain.Company;
 import myy803.traineeship_app.domain.Evaluation;
 import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.mappers.CompanyMapper;
 import myy803.traineeship_app.service.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,9 +22,6 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
-
-
-    // ---------- Company User Stories
 
     @RequestMapping("/dashboard")
     public String getCompanyDashboard(){

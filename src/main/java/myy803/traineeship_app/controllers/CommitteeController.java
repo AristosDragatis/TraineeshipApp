@@ -1,19 +1,11 @@
 package myy803.traineeship_app.controllers;
 
-import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
-import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchStrategy;
-import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
-import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssignmentStrategy;
 import myy803.traineeship_app.domain.Evaluation;
 import myy803.traineeship_app.domain.EvaluationType;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.mappers.StudentMapper;
-import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 import myy803.traineeship_app.service.services.TraineeshipService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,24 +18,8 @@ import java.util.List;
 @Controller
 public class CommitteeController {
 
-
-    @Autowired
-    private StudentMapper studentMapper;
-
-    @Autowired
-    private PositionsSearchFactory positionsSearchFactory;
-
-    @Autowired
-    private TraineeshipPositionsMapper positionsMapper;
-
-    @Autowired
-    SupervisorAssigmentFactory supervisorAssigmentFactory;
-
     @Autowired
     private TraineeshipService  traineeshipService;
-
-
-    // ---------- Committee User Stories
 
     @RequestMapping("/dashboard")
     public String getCommitteeDashboard(){
