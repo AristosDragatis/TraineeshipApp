@@ -4,10 +4,7 @@ import myy803.traineeship_app.domain.LogBook;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.service.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,13 @@ public class StudentRestController {
         return studentService.retrieveStudentProfile(username);
     }
 
+    // POST add logbook entry
+    @PostMapping("logbook/add")
+    public String addLogBookEntry(
+            @RequestParam String username,
+            @RequestParam String content){
 
+        studentService.addEntryToLogBook(username, content);
+        return "Log entry added successfully!";
+    }
 }
