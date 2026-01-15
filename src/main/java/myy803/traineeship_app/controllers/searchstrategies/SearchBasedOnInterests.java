@@ -28,5 +28,4 @@ public class SearchBasedOnInterests extends AbstractPositionsSearch {
         }
         return new ArrayList<>(matchingPositionsSet);
 	}
-
 }
