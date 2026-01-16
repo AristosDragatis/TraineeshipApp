@@ -31,7 +31,7 @@ public class PositionsSearchFactoryTest {
         assertEquals(searchBasedOnLocation, strategy2);
 
 
-        // default behaviour location (switch)
+        // default behaviour location
         PositionsSearchStrategy strategy3 = factory.create("blabla");
         assertEquals(searchBasedOnLocation, strategy3);
     }
