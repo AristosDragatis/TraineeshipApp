@@ -13,12 +13,22 @@ public class SearchBasedOnLocation extends AbstractPositionsSearch {
 	
 	@Override
 	protected List<TraineeshipPosition> filterPositions(List<TraineeshipPosition> positions, Student student) {
-		
+
+		if (student.getPreferredLocation() == null) {
+			return List.of();
+		}
+
 		return positions.stream()
-	            .filter(pos -> pos.getCompany().getCompanyLocation()
-	                .equalsIgnoreCase(student.getPreferredLocation()))
-	            .filter(pos -> !pos.isAssigned()) 
-	            .collect(Collectors.toList());
+				.filter(pos -> {
+					if (pos.getCompany() == null) return false;
+
+					if (pos.getCompany().getCompanyLocation() == null) return false;
+
+					return pos.getCompany().getCompanyLocation()
+							.equalsIgnoreCase(student.getPreferredLocation());
+				})
+				.filter(pos -> !pos.isAssigned())
+				.collect(Collectors.toList());
 	}
 
 }
