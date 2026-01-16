@@ -1,8 +1,6 @@
 package myy803.traineeship_app.domain;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.security.core.parameters.P;
-
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

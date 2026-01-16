@@ -2,71 +2,41 @@ package myy803.traineeship_app.controllers.searchstrategies;
 
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.mappers.StudentMapper;
-import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-@ExtendWith(MockitoExtension.class)
 public class SearchBasedOnInterestsTest {
-    @Mock
-    private TraineeshipPositionsMapper positionsMapper;
-
-    @Mock
-    private StudentMapper studentMapper;
-
-    // η κλάση που τεστάρουμε ( βάζει τους mocks μεσα της )
-    @InjectMocks
-    private SearchBasedOnInterests strategy;
 
 
     @Test
-    void testSearchInterestsAndFindPositions(){
-        String username = "aris";
+    void testFilterPositions(){
+        // Setup
+        SearchBasedOnInterests strategy = new SearchBasedOnInterests();
 
-        // create the student with multiple interests
-        Student mockStudent = new Student(username);
-        mockStudent.setInterests("Java,Python");
-
-        TraineeshipPosition javaPos = new TraineeshipPosition();
-        javaPos.setTitle("Java Developer");
-
-        TraineeshipPosition pythonPos = new TraineeshipPosition();
-        pythonPos.setTitle("Python Developer");
-
-        // Mocks training
-        // when a student named "aris" is asked - give the one we just created
-        when(studentMapper.findByUsername(username)).thenReturn(mockStudent);
+        Student student = new Student("new_student");
+        student.setInterests("Java, Spring");
 
 
-        // split is happening so we must diverse the two scenarios
+        TraineeshipPosition pos1 = new TraineeshipPosition();
+        pos1.setTopics("Java Developer"); // matches
+        pos1.setAssigned(false);
 
-        // stubbing
-        // java position
-        when(positionsMapper.findByTopicsContainingAndIsAssignedFalse("Java")).thenReturn(Arrays.asList(javaPos));
+        TraineeshipPosition pos2 = new TraineeshipPosition();
+        pos2.setTopics("Python Data Science"); // doesn't match
+        pos2.setAssigned(false);
 
-        // python position
-        when(positionsMapper.findByTopicsContainingAndIsAssignedFalse("Python")).thenReturn(Arrays.asList(pythonPos));
 
-        List<TraineeshipPosition> results = strategy.search(username);
+        List<TraineeshipPosition> inputList = Arrays.asList(pos1, pos2);
 
-        assertEquals(2, results.size(), "2 positions must be found");
+        // Execution: call filterPositions method
+        List<TraineeshipPosition> result = strategy.filterPositions(inputList, student);
 
-        // we verify that the mapper was called 2 times
-        verify(positionsMapper).findByTopicsContainingAndIsAssignedFalse("Java");
-        verify(positionsMapper).findByTopicsContainingAndIsAssignedFalse("Python");
+        // Assertion
+        assertEquals(1, result.size());
+        assertEquals("Java Developer", result.get(0).getTopics());
 
-        verify(studentMapper).findByUsername(username);
     }
 }

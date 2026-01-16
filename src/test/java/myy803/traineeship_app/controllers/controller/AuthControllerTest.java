@@ -18,15 +18,15 @@ import myy803.traineeship_app.service.UserService;
 class AuthControllerTest {
 
     @Mock
-    private UserService userService; // Ο "Ψεύτικος" Συνεργάτης που διαχειρίζεται τους χρήστες
+    private UserService userService;
 
     @Mock
-    private Model model; // Το ψεύτικο Model για να στέλνουμε μηνύματα στο HTML
+    private Model model;
 
     @InjectMocks
-    private AuthController controller; // Ο Controller που ελέγχουμε
+    private AuthController controller;
 
-    // --- ΤΕΣΤ 1: Εμφάνιση Σελίδας Login ---
+    // login testing
     @Test
     void testLogin() {
         // ACT
@@ -36,63 +36,56 @@ class AuthControllerTest {
         assertEquals("auth/login", viewName);
     }
 
-    // --- ΤΕΣΤ 2: Εμφάνιση Σελίδας Register ---
+    // user register testing
     @Test
     void testRegister() {
         // ACT
         String viewName = controller.register(model);
         
         // ASSERT
-        // Ελέγχουμε ότι πρόσθεσε έναν κενό "user" στο μοντέλο (γραμμή 26 του κώδικά σου)
         verify(model).addAttribute(eq("user"), any(User.class));
         assertEquals("auth/register", viewName);
     }
 
-    // --- ΤΕΣΤ 3: Επιτυχημένη Εγγραφή Χρήστη ---
+
     @Test
     void testRegisterUser_Success() {
         // ARRANGE
         User newUser = new User();
         newUser.setUsername("new_user");
 
-        // "Εκπαιδεύουμε" το mock: Του λέμε ότι ο χρήστης ΔΕΝ υπάρχει
+        // mock
         when(userService.isUserPresent(newUser)).thenReturn(false);
 
         // ACT
         String viewName = controller.registerUser(newUser, model);
 
         // ASSERT
-        // 1. Πρέπει να καλέσει την saveUser (Αυτό είναι το πιο σημαντικό!)
         verify(userService).saveUser(newUser);
         
-        // 2. Πρέπει να βάλει μήνυμα επιτυχίας
         verify(model).addAttribute("successMessage", "User registered successfully!");
         
-        // 3. Πρέπει να μας πάει στο login
         assertEquals("auth/login", viewName);
     }
 
-    // --- ΤΕΣΤ 4: Αποτυχημένη Εγγραφή (Ο χρήστης υπάρχει ήδη) ---
+    // failed register (user already exists)
     @Test
     void testRegisterUser_UserExists() {
         // ARRANGE
         User existingUser = new User();
         existingUser.setUsername("existing_user");
 
-        // "Εκπαιδεύουμε" το mock: Του λέμε ότι ο χρήστης ΥΠΑΡΧΕΙ ήδη
+        // mock
         when(userService.isUserPresent(existingUser)).thenReturn(true);
 
         // ACT
         String viewName = controller.registerUser(existingUser, model);
 
-        // ASSERT
-        // 1. ΠΡΟΣΟΧΗ: ΔΕΝ πρέπει να καλέσει την saveUser!
+        // ASSERT (verify that the interraction did not happen with never() )
         verify(userService, never()).saveUser(existingUser);
         
-        // 2. Πρέπει να βάλει μήνυμα ότι ο χρήστης υπάρχει
         verify(model).addAttribute("successMessage", "User already registered!");
         
-        // 3. Πρέπει να μας πάει πάλι στο login
         assertEquals("auth/login", viewName);
     }
 }
