@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/student")
+@RequestMapping("/api/student")
 public class StudentRestController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class StudentRestController {
 
 
     // POST add logbook entry
-    @PostMapping("logbook/add")
+    @PostMapping("/logbook/add")
     public ResponseEntity<String> addLogBookEntry(@RequestParam String content) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         studentService.addEntryToLogBook(username, content);

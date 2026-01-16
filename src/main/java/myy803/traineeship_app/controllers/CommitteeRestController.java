@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/committee")
+@RequestMapping("/api/committee")
 public class CommitteeRestController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class CommitteeRestController {
     }
 
     // assign supervisor
-    @PostMapping("assign_supervisor")
+    @PostMapping("/assign_supervisor")
     public ResponseEntity<String> assignSupervisor(
             @RequestParam("selected_position_id") Integer positionId,
             @RequestParam("strategy") String strategy){
@@ -42,7 +42,7 @@ public class CommitteeRestController {
     }
 
     // assign position to student
-    @PostMapping("assign_position")
+    @PostMapping("/assign_position")
     public ResponseEntity<String> assignPosition(
             @RequestParam("selected_position_id") Integer positionId,
             @RequestParam("applicant_username") String studentUsername){
@@ -57,7 +57,7 @@ public class CommitteeRestController {
     }
 
 
-    @GetMapping("view_details")
+    @GetMapping("/view_details")
     public TraineeshipPosition viewDetails(@RequestParam("id") Integer id){
         return traineeshipService.getPositionDetails(id);
     }
