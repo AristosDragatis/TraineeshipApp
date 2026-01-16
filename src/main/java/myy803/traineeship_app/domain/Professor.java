@@ -19,11 +19,11 @@ public class Professor {
 	@Column(name="interests")
 	private String interests;
 
-	@JsonIgnore
 	@OneToMany(
 			mappedBy = "supervisor",
 			cascade=CascadeType.ALL, 
-			fetch= FetchType.LAZY) 
+			fetch= FetchType.LAZY)
+	@JsonIgnore
 	private List<TraineeshipPosition> supervisedPositions;
 
 	public Professor() {
