@@ -75,7 +75,7 @@ class CommitteeControllerTest {
     void testFindPositions() {
         List<TraineeshipPosition> results = new ArrayList<>();
         when(positionsSearchFactory.create("interests")).thenReturn(mockSearchStrategy);
-        when(mockSearchStrategy.filter("aris")).thenReturn(results);
+        when(mockSearchStrategy.search("aris")).thenReturn(results);
 
         String view = controller.findPositions("aris", "interests", model);
 

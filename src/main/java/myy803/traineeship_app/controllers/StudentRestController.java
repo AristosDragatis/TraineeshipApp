@@ -31,7 +31,7 @@ public class StudentRestController {
     @PostMapping("logbook/add")
     public String addLogBookEntry(
             @RequestParam String username,
-            @RequestParam String content){
+            @RequestParam String content) {
 
         studentService.addEntryToLogBook(username, content);
         return "Log entry added successfully!";
