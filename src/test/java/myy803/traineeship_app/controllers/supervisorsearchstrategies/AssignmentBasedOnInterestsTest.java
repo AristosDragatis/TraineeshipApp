@@ -22,45 +22,44 @@ public class AssignmentBasedOnInterestsTest {
     @BeforeEach
     void setUp() {
         strategy = new AssignmentBasedOnInterests();
-
-        //  (Topics)
         position = new TraineeshipPosition();
-        position.setTopics("Java, Spring, Backend");
 
-        // Professor that matches (Java)
+        // without spaces
+        position.setTopics("Java,Spring,Backend");
+
+        // professor that matches
         javaProf = new Professor("java_prof");
-        javaProf.setInterests("Software Engineering, Java, Cloud");
-        // initialize list to avoid null pointer exception
+        // without spaces at interests
+        javaProf.setInterests("SoftwareEngineering,Java,Cloud");
         javaProf.setSupervisedPositions(new ArrayList<>());
 
-        // 3. Καθηγητής που ΔΕΝ ταιριάζει (History)
+        // professor that does not match
         historyProf = new Professor("history_prof");
-        historyProf.setInterests("History, Ancient Greece");
+        // without spaces
+        historyProf.setInterests("History,AncientGreece");
         historyProf.setSupervisedPositions(new ArrayList<>());
 
-        // List with all the professors
         professorsList = Arrays.asList(historyProf, javaProf);
     }
 
     @Test
-    void testFindCandidateMatchFound() {
+    void testFindCandidate_MatchFound() {
         // Act
         Professor result = strategy.findCandidate(professorsList, position);
 
-        // Assert should find java_prof
+        // Assert
         assertNotNull(result, "Should return a professor");
         assertEquals("java_prof", result.getUsername(), "Should select the professor with matching interests");
     }
 
     @Test
-    void testFindCandidateNoMatch() {
-        // Arrange
-        position.setTopics("C++, Embedded Systems");
+    void testFindCandidate_NoMatch() {
+        position.setTopics("Python,Ruby");
 
         // Act
         Professor result = strategy.findCandidate(professorsList, position);
 
-        // Assertion
-        assertNull(result, "Should return null if no matching interests found");
+        // Assert
+        assertNull(result, "Should return null because no professor knows Python or Ruby");
     }
 }

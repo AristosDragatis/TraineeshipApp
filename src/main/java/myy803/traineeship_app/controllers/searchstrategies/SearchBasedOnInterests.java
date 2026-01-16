@@ -18,7 +18,7 @@ public class SearchBasedOnInterests extends AbstractPositionsSearch {
 		
 		Set<TraineeshipPosition> matchingPositionsSet = new HashSet<TraineeshipPosition>();
 		String[] interests = student.getInterests().split("[,\\s+\\.]");
-		
+
 		for (TraineeshipPosition pos : positions) {
             for (String interest : interests) {
                 if (pos.getTopics().contains(interest) && !pos.isAssigned()) {
