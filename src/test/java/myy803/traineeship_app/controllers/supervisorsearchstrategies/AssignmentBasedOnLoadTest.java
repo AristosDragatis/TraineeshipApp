@@ -61,7 +61,7 @@ public class AssignmentBasedOnLoadTest {
     // this is based on the logic of the implemented method (findCandidate)
     @Test
     void testAssignmentWithEqualLoad() {
-        // Arrange
+        // Arrange (busy prof had 2 positions so we add 2 positions for freeprof to achieve equality)
         freeProf.getSupervisedPositions().add(new TraineeshipPosition());
         freeProf.getSupervisedPositions().add(new TraineeshipPosition());
 
