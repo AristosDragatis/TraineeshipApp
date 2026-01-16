@@ -12,13 +12,13 @@ import org.springframework.ui.Model;
 
 import myy803.traineeship_app.controllers.ProfessorController;
 import myy803.traineeship_app.domain.Professor;
-import myy803.traineeship_app.mappers.ProfessorMapper;
+import myy803.traineeship_app.service.services.ProfessorService;
 
 @ExtendWith(MockitoExtension.class)
 class ProfessorControllerTest {
 
     @Mock
-    private ProfessorMapper professorMapper;
+    private ProfessorService professorService;
 
     @Mock
     private Model model;
@@ -36,7 +36,7 @@ class ProfessorControllerTest {
         String viewName = controller.saveProfile(prof, model);
 
         // ASSERT
-        verify(professorMapper).save(prof);
-        assertEquals("professor/dashboard", viewName); // Προσαρμόζεις ανάλογα το return
+        verify(professorService).saveProfessorProfile(prof);
+        assertEquals("professor/dashboard", viewName);
     }
 }

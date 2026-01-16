@@ -12,43 +12,37 @@ import org.springframework.ui.Model;
 
 import myy803.traineeship_app.controllers.CompanyController;
 import myy803.traineeship_app.domain.Company;
-import myy803.traineeship_app.mappers.CompanyMapper;
+import myy803.traineeship_app.service.services.CompanyService;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyControllerTest {
 
     @Mock
-    private CompanyMapper companyMapper; 
+    private CompanyService companyService;
 
     @Mock
-    private Model model; 
+    private Model model;
 
     @InjectMocks
-    private CompanyController controller; 
+    private CompanyController controller;
 
-    
     @Test
     void testGetCompanyDashboard() {
-        // ACT
         String viewName = controller.getCompanyDashboard();
-        
-        // ASSERT
         assertEquals("company/dashboard", viewName);
     }
 
-    
     @Test
     void testSaveProfile() {
         // ARRANGE
         Company company = new Company();
         company.setUsername("my_company");
-        
+
         // ACT
-                String viewName = controller.saveProfile(company, model);
+        String viewName = controller.saveProfile(company, model);
 
         // ASSERT
-                verify(companyMapper).save(company);
-        
-                assertEquals("company/dashboard", viewName); 
+        verify(companyService).companySaveProfile(company);
+        assertEquals("company/dashboard", viewName);
     }
 }

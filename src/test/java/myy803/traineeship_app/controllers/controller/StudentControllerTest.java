@@ -12,32 +12,24 @@ import org.springframework.ui.Model;
 
 import myy803.traineeship_app.controllers.StudentController;
 import myy803.traineeship_app.domain.Student;
-import myy803.traineeship_app.mappers.StudentMapper;
+import myy803.traineeship_app.service.services.StudentService;
 
 @ExtendWith(MockitoExtension.class)
 class StudentControllerTest {
 
     @Mock
-    private StudentMapper studentMapper; // Ο ψεύτικος Mapper
+    private StudentService studentService;
 
     @Mock
     private Model model;
 
     @InjectMocks
-    private StudentController controller; // Ο αληθινός Controller
+    private StudentController controller;
 
     @Test
     void testGetStudentDashboard() {
-        // Υποθέτουμε ότι η μέθοδος λέγεται getStudentDashboard ή getDashboard
-        // και επιστρέφει "student/dashboard"
-        // Αν κοκκινίσει, δες το όνομα της μεθόδου στον Controller του φίλου σου.
-        try {
-             String viewName = controller.getStudentDashboard(); // ή getDashboard()
-             assertEquals("student/dashboard", viewName);
-        } catch (Exception e) {
-            // Αν δεν υπάρχει η μέθοδος, απλά αγνόησε το
-            System.out.println("Η μέθοδος dashboard ίσως έχει άλλο όνομα");
-        }
+        String viewName = controller.getStudentDashboard();
+        assertEquals("student/dashboard", viewName);
     }
 
     @Test
@@ -47,13 +39,11 @@ class StudentControllerTest {
         student.setUsername("student1");
 
         // ACT
-        // Δοκιμάζουμε με (student, model) όπως κάναμε στο Company
         String viewName = controller.saveProfile(student, model);
 
         // ASSERT
-        verify(studentMapper).save(student);
-        // Εδώ συνήθως επιστρέφουν στο dashboard ή στο profile.
-        // Δες τι return έχει ο κώδικας του φίλου σου. Βάζω dashboard για αρχή.
+        // check if controller called student service
+        verify(studentService).saveStudentProfile(student);
         assertEquals("student/dashboard", viewName);
     }
 }
