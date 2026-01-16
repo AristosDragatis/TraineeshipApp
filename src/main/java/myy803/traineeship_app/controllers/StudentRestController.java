@@ -4,6 +4,8 @@ import myy803.traineeship_app.domain.LogBook;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.service.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,25 +17,35 @@ public class StudentRestController {
     @Autowired
     private StudentService studentService;
 
-    // GET
-    @GetMapping("/logbook")
-    public List<LogBook> getLogbook(@RequestParam String username){
-        return studentService.getStudentLogBook(username);
-    }
 
     // GET student profile (retrieveStudentProfile)
-    @GetMapping("profile")
-    public Student getProfile(@RequestParam String username){
+    @GetMapping("/profile")
+    public Student getProfile(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return studentService.retrieveStudentProfile(username);
     }
 
+    // RequestBody parameter for fetching JSON
+    @PostMapping("/save_profile")
+    public ResponseEntity<String> saveProfile(@RequestBody Student student){
+        studentService.saveStudentProfile(student);
+        return ResponseEntity.ok("Profile updated successfully!");
+    }
+
+
+    // GET student logbook
+    @GetMapping("/logbook")
+    public List<LogBook> getLogbook(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return studentService.getStudentLogBook(username);
+    }
+
+
     // POST add logbook entry
     @PostMapping("logbook/add")
-    public String addLogBookEntry(
-            @RequestParam String username,
-            @RequestParam String content) {
-
+    public ResponseEntity<String> addLogBookEntry(@RequestParam String content) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         studentService.addEntryToLogBook(username, content);
-        return "Log entry added successfully!";
+        return ResponseEntity.ok("Log entry added.");
     }
 }
