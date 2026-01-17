@@ -72,7 +72,6 @@ public class CompanyController {
         model.addAttribute("position", position);
 
         return "company/position";
-
     }
 
     @RequestMapping("/save_position")
