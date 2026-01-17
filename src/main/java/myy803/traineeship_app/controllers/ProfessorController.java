@@ -3,7 +3,6 @@ package myy803.traineeship_app.controllers;
 import myy803.traineeship_app.domain.Evaluation;
 import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.mappers.ProfessorMapper;
 import myy803.traineeship_app.service.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,9 +17,6 @@ import java.util.List;
 
 @Controller
 public class ProfessorController {
-
-    @Autowired
-    private ProfessorMapper professorMapper;
 
     @Autowired
     private ProfessorService professorService;

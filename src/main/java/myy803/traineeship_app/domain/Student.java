@@ -134,16 +134,3 @@ public class Student {
         this.assignedTraineeship = assignedTraineeship;
     }
 }
-
-//No need to keep that list. A recommendations button returns 
-//a list of positions that the student can accept, the question 
-//is what happens if two students press the button at that same time ?? 	
-//@OneToMany(
-//			cascade=CascadeType.ALL, 
-//			fetch= FetchType.LAZY, 
-//			mappedBy="applicant")	// this is bidirectional 
-//	private List<Application> applications;
-//	
-
-//Every student has his own preferred strategy for finding a position. 
-// The committee gets a list of matching positions and decides which one to assign.
