@@ -1,11 +1,11 @@
 package myy803.traineeship_app.domain;
 
 public enum Role {
-	STUDENT("Student"),
-	PROFESSOR("Professor"),
-	COMPANY("Company"),
-	COMMITTEE("Committee");
-	
+    STUDENT("Student"),
+    PROFESSOR("Professor"),
+    COMPANY("Company"),
+    COMMITTEE("Committee");
+
 
     private final String value;
 

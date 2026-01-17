@@ -1,28 +1,26 @@
 package myy803.traineeship_app.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.Arrays;
-import java.util.List;
-
+import myy803.traineeship_app.domain.LogBook;
+import myy803.traineeship_app.domain.Student;
+import myy803.traineeship_app.mappers.LogBookMapper;
+import myy803.traineeship_app.mappers.StudentMapper;
+import myy803.traineeship_app.service.services.StudentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import myy803.traineeship_app.domain.LogBook;
-import myy803.traineeship_app.domain.Student;
-import myy803.traineeship_app.mappers.LogBookMapper;
-import myy803.traineeship_app.mappers.StudentMapper;
-import myy803.traineeship_app.service.services.StudentService;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
 
-    @Mock private StudentMapper studentMapper;
-    @Mock private LogBookMapper logbookMapper;
+    @Mock
+    private StudentMapper studentMapper;
+    @Mock
+    private LogBookMapper logbookMapper;
 
     @InjectMocks
     private StudentService studentService;

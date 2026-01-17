@@ -1,5 +1,6 @@
 package myy803.traineeship_app.config;
 
+import myy803.traineeship_app.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import myy803.traineeship_app.service.UserServiceImpl;
 
 
 @Configuration
@@ -42,10 +41,10 @@ public class WebSecurityConfig {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         /*
-         * Configures the custom authentication provider with 
+         * Configures the custom authentication provider with
          * the custom user details service and encoder
          */
-    	DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -55,44 +54,44 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    	
-    	/*
-    	 * setup the filter chain, last we have the 
-    	 * authentication filter for all requests
-    	 */
-                http.authorizeHttpRequests(
-                		(authz) -> authz
-                		.requestMatchers("/", "/login", "/register", "/save").permitAll()
+
+        /*
+         * setup the filter chain, last we have the
+         * authentication filter for all requests
+         */
+        http.authorizeHttpRequests(
+                (authz) -> authz
+                        .requestMatchers("/", "/login", "/register", "/save").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/student/**").hasAnyAuthority("STUDENT") 
-                        .requestMatchers("/professor/**").hasAnyAuthority("PROFESSOR") 
-                        .requestMatchers("/company/**").hasAnyAuthority("COMPANY") 
-                        .requestMatchers("/committee/**").hasAnyAuthority("COMMITTEE") 
+                        .requestMatchers("/student/**").hasAnyAuthority("STUDENT")
+                        .requestMatchers("/professor/**").hasAnyAuthority("PROFESSOR")
+                        .requestMatchers("/company/**").hasAnyAuthority("COMPANY")
+                        .requestMatchers("/committee/**").hasAnyAuthority("COMMITTEE")
                         .anyRequest().authenticated()
-                		);
-                
-                http.formLogin(fL -> fL.loginPage("/login")
-                		.failureUrl("/login?error=true")
-                        .successHandler(customSecuritySuccessHandler)
-                        .usernameParameter("username")
-                        .passwordParameter("password"));
-                
-                http.logout(logOut -> logOut.logoutUrl("/logout")
-                		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                		.logoutSuccessUrl("/")
-                		);
+        );
 
-                /*
-                 *  Sets the authentication provider with the custom
-                 *  user details service and encoder
-                 */
-          
-                http.authenticationProvider(authenticationProvider());
+        http.formLogin(fL -> fL.loginPage("/login")
+                .failureUrl("/login?error=true")
+                .successHandler(customSecuritySuccessHandler)
+                .usernameParameter("username")
+                .passwordParameter("password"));
 
-                return http.build();
+        http.logout(logOut -> logOut.logoutUrl("/logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+        );
+
+        /*
+         *  Sets the authentication provider with the custom
+         *  user details service and encoder
+         */
+
+        http.authenticationProvider(authenticationProvider());
+
+        return http.build();
     }
-    
-    
+
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/webjars/**");

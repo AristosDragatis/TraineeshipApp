@@ -20,14 +20,14 @@ public class StudentRestController {
 
     // GET student profile (retrieveStudentProfile)
     @GetMapping("/profile")
-    public Student getProfile(){
+    public Student getProfile() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return studentService.retrieveStudentProfile(username);
     }
 
     // RequestBody parameter for fetching JSON
     @PostMapping("/save_profile")
-    public ResponseEntity<String> saveProfile(@RequestBody Student student){
+    public ResponseEntity<String> saveProfile(@RequestBody Student student) {
         studentService.saveStudentProfile(student);
         return ResponseEntity.ok("Profile updated successfully!");
     }
@@ -35,7 +35,7 @@ public class StudentRestController {
 
     // GET student logbook
     @GetMapping("/logbook")
-    public List<LogBook> getLogbook(){
+    public List<LogBook> getLogbook() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return studentService.getStudentLogBook(username);
     }

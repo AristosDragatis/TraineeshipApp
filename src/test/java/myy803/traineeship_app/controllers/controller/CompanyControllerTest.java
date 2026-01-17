@@ -1,8 +1,8 @@
 package myy803.traineeship_app.controllers.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-
+import myy803.traineeship_app.controllers.CompanyController;
+import myy803.traineeship_app.domain.Company;
+import myy803.traineeship_app.service.services.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,9 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
-import myy803.traineeship_app.controllers.CompanyController;
-import myy803.traineeship_app.domain.Company;
-import myy803.traineeship_app.service.services.CompanyService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyControllerTest {

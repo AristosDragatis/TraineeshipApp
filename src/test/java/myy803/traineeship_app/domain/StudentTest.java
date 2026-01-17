@@ -2,13 +2,14 @@ package myy803.traineeship_app.domain;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class StudentTest {
 
 
     @Test
-    void testStudent(){
+    void testStudent() {
         Student student = new Student("Aristos Dragatis");
         student.setAM("534");
 

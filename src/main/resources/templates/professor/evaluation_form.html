@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
@@ -7,31 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <title>Evaluation Form</title>
 </head>
 <body>
 <form th:action="@{/professor/save_evaluation}" th:object="${evaluation}" method="post">
-    <input type="hidden" name="positionId" th:value="${positionId}" />
+    <input type="hidden" name="positionId" th:value="${positionId}"/>
 
     <h4>Student Performance</h4>
     <label>Motivation (1-5):</label>
-    <input type="number" th:field="*{motivation}" min="1" max="5" class="form-control" required />
+    <input type="number" th:field="*{motivation}" min="1" max="5" class="form-control" required/>
 
     <label>Efficiency (1-5):</label>
-    <input type="number" th:field="*{efficiency}" min="1" max="5" class="form-control" required />
+    <input type="number" th:field="*{efficiency}" min="1" max="5" class="form-control" required/>
 
     <label>Effectiveness (1-5):</label>
-    <input type="number" th:field="*{effectiveness}" min="1" max="5" class="form-control" required />
+    <input type="number" th:field="*{effectiveness}" min="1" max="5" class="form-control" required/>
 
     <hr>
     <h4>Company Performance</h4>
     <label>Facilities (1-5):</label>
-    <input type="number" th:field="*{facilities}" min="1" max="5" class="form-control" required />
+    <input type="number" th:field="*{facilities}" min="1" max="5" class="form-control" required/>
 
     <label>Guidance (1-5):</label>
-    <input type="number" th:field="*{guidance}" min="1" max="5" class="form-control" required />
+    <input type="number" th:field="*{guidance}" min="1" max="5" class="form-control" required/>
 
     <button type="submit" class="btn btn-success mt-3">Submit Evaluation</button>
 </form>

@@ -1,14 +1,15 @@
 package myy803.traineeship_app.domain;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProfessorTest {
 
     @Test
-    void testCompareLoad(){
+    void testCompareLoad() {
         // create the current professor
         Professor current = new Professor("current_prof");
         current.setSupervisedPositions(new ArrayList<>());

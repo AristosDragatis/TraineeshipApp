@@ -20,10 +20,10 @@ public class ProfessorService {
     @Autowired
     private TraineeshipPositionsMapper traineeshipPositionsMapper;
 
-    public Professor retrieveProfessorProfile(String username){
+    public Professor retrieveProfessorProfile(String username) {
 
         Professor professor = professorMapper.findByUsername(username);
-        if(professor == null){
+        if (professor == null) {
             professor = new Professor(username);
         }
 
@@ -31,16 +31,16 @@ public class ProfessorService {
     }
 
     // save professor
-    public void saveProfessorProfile(Professor professor){
+    public void saveProfessorProfile(Professor professor) {
 
         professorMapper.save(professor);
     }
 
 
-    public List<TraineeshipPosition> listSupervisedPositions(String username){
+    public List<TraineeshipPosition> listSupervisedPositions(String username) {
         Professor professor = professorMapper.findByUsername(username);
 
-        if(professor.getSupervisedPositions() == null){
+        if (professor.getSupervisedPositions() == null) {
             return new ArrayList<>();
         }
 
@@ -48,14 +48,13 @@ public class ProfessorService {
     }
 
 
-
-    public void fillEvaluation(Integer positionId, Evaluation evaluation){
+    public void fillEvaluation(Integer positionId, Evaluation evaluation) {
 
         // find position from the database
         TraineeshipPosition position = traineeshipPositionsMapper.findById(positionId)
                 .orElseThrow(() -> new RuntimeException("Position not found"));
 
-        if(position.getStudent() == null){
+        if (position.getStudent() == null) {
             throw new RuntimeException("Cannot evaluate unassigned position");
         }
 
@@ -63,20 +62,20 @@ public class ProfessorService {
         evaluation.setEvaluationType(EvaluationType.PROFESSOR_EVALUATION);
 
         Evaluation existing = getProfessorEvaluation(positionId);
-        if(existing != null){
+        if (existing != null) {
             existing.setMotivation(evaluation.getMotivation());
             existing.setEffectiveness(evaluation.getEffectiveness());
             existing.setEfficiency(evaluation.getEfficiency());
             existing.setFacilities(evaluation.getFacilities());
             existing.setGuidance(evaluation.getGuidance());
-        }else {
+        } else {
             position.getEvaluations().add(evaluation);
         }
 
         traineeshipPositionsMapper.save(position);
     }
 
-    public Evaluation getProfessorEvaluation(Integer positionId){
+    public Evaluation getProfessorEvaluation(Integer positionId) {
 
         TraineeshipPosition position = traineeshipPositionsMapper.findById(positionId)
                 .orElseThrow(() -> new RuntimeException("Position not found"));

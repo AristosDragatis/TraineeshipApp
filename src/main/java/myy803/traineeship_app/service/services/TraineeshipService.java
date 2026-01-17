@@ -31,21 +31,21 @@ public class TraineeshipService {
     private SupervisorAssigmentFactory assigmentFactory;
 
 
-    public List<Student> listTraineeshipApplications(){
+    public List<Student> listTraineeshipApplications() {
         return studentMapper.findByLookingForTraineeshipTrue();
     }
 
-    public List<TraineeshipPosition> findPositionsForStudent(String username, String strategyType){
+    public List<TraineeshipPosition> findPositionsForStudent(String username, String strategyType) {
         Student student = studentMapper.findByUsername(username);
         List<TraineeshipPosition> allPositions = positionsMapper.findAll();
-        
+
         AbstractPositionsSearch searchStrategy = (AbstractPositionsSearch) positionsSearchFactory.create(strategyType);
-        
+
         return searchStrategy.filter(allPositions, student);
     }
 
     // assign position to student
-    public void assignPositionToStudent(Integer positionId, String studentUsername){
+    public void assignPositionToStudent(Integer positionId, String studentUsername) {
 
         Student student = studentMapper.findByUsername(studentUsername);
         TraineeshipPosition position = positionsMapper.findById(positionId).get();
@@ -60,20 +60,20 @@ public class TraineeshipService {
     }
 
     // assign supervised position to professor
-    public void assignSupervisor(Integer positionId, String strategyType){
+    public void assignSupervisor(Integer positionId, String strategyType) {
         TraineeshipPosition position = positionsMapper.findById(positionId).get();
         List<Professor> professors = professorMapper.findAll();
-        
-        
+
+
         SupervisorAssignmentStrategy strategy = assigmentFactory.create(strategyType);
-        
+
         strategy.performAssignment(professors, position);
-        
+
         positionsMapper.save(position);
     }
 
     // list of assigned traineeships in progress
-    public List<TraineeshipPosition> listProgressTraineeships(){
+    public List<TraineeshipPosition> listProgressTraineeships() {
 
         // find all positions
         List<TraineeshipPosition> allPositions = positionsMapper.findAll();
@@ -85,7 +85,7 @@ public class TraineeshipService {
     }
 
     // us21 fetch all positions
-    public TraineeshipPosition getPositionDetails(Integer id){
+    public TraineeshipPosition getPositionDetails(Integer id) {
         return positionsMapper.findById(id)
                 .orElseThrow(() -> new RuntimeException("position not found"));
     }
@@ -96,9 +96,6 @@ public class TraineeshipService {
         position.setPassFailGrade(passFail);
         positionsMapper.save(position);
     }
-
-
-
 
 
 }

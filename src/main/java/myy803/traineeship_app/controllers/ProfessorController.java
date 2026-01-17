@@ -23,16 +23,16 @@ public class ProfessorController {
     private ProfessorMapper professorMapper;
 
     @Autowired
-    private ProfessorService  professorService;
+    private ProfessorService professorService;
 
     @RequestMapping("/professor/dashboard")
-    public String getProfessorDashboard(){
+    public String getProfessorDashboard() {
 
         return "professor/dashboard";
     }
 
     @RequestMapping("/professor/profile")
-    public String retrieveProfessorProfile(Model model){
+    public String retrieveProfessorProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         System.err.println("Logged use: " + username);
@@ -54,7 +54,7 @@ public class ProfessorController {
 
 
     @RequestMapping("professor/list_traineeships")
-    public String listTraineeships(Model model){
+    public String listTraineeships(Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -63,19 +63,19 @@ public class ProfessorController {
 
         model.addAttribute("positions", positions); // send the list to Thymeleaf
 
-        return  "professor/list_traineeships";
+        return "professor/list_traineeships";
     }
 
 
     @RequestMapping("professor/show_evaluation_form")
-    public String showEvaluationForm(@RequestParam("positionId") Integer positionId, Model model){
+    public String showEvaluationForm(@RequestParam("positionId") Integer positionId, Model model) {
 
         // try to get an existing professors evaluation for this position
         // this ensures that if the professor wants to edit their evaluations, they see the old ones
         Evaluation evaluation = professorService.getProfessorEvaluation(positionId);
 
 
-        if(evaluation == null){
+        if (evaluation == null) {
             evaluation = new Evaluation();
         }
 
@@ -83,12 +83,12 @@ public class ProfessorController {
         model.addAttribute("positionId", positionId);
         model.addAttribute("evaluation", evaluation);
 
-        return  "professor/evaluation_form";
+        return "professor/evaluation_form";
     }
 
     @RequestMapping("professor/save_evaluation")
     public String saveEvaluation(@RequestParam("positionId") Integer positionId,
-                                 @ModelAttribute("evaluation") Evaluation evaluation){
+                                 @ModelAttribute("evaluation") Evaluation evaluation) {
 
         // call the service to save/update the evaluation
         professorService.fillEvaluation(positionId, evaluation);

@@ -22,13 +22,13 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping("/dashboard")
-    public String getStudentDashboard(){
+    public String getStudentDashboard() {
 
         return "student/dashboard";
     }
 
     @RequestMapping("/profile")
-    public String retrieveStudentProfile(Model model){
+    public String retrieveStudentProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String studentUsername = authentication.getName();
         System.err.println("Logged use: " + studentUsername);
@@ -52,7 +52,7 @@ public class StudentController {
 
     // student logbook user story
     @RequestMapping("/logbook")
-    public String showLogbook(Model model){
+    public String showLogbook(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
 
@@ -63,10 +63,10 @@ public class StudentController {
 
 
     @RequestMapping("/save_logbook")
-    public String saveEntry(@RequestParam("content") String content, Model model){
+    public String saveEntry(@RequestParam("content") String content, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        studentService.addEntryToLogBook(username,content);
+        studentService.addEntryToLogBook(username, content);
         return "redirect:/student/logbook";
     }
 }

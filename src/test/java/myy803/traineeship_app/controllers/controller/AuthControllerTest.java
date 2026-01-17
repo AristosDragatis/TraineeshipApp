@@ -1,8 +1,8 @@
 package myy803.traineeship_app.controllers.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
+import myy803.traineeship_app.controllers.AuthController;
+import myy803.traineeship_app.domain.User;
+import myy803.traineeship_app.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,9 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
-import myy803.traineeship_app.controllers.AuthController;
-import myy803.traineeship_app.domain.User;
-import myy803.traineeship_app.service.UserService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
@@ -31,7 +30,7 @@ class AuthControllerTest {
     void testLogin() {
         // ACT
         String viewName = controller.login();
-        
+
         // ASSERT
         assertEquals("auth/login", viewName);
     }
@@ -41,7 +40,7 @@ class AuthControllerTest {
     void testRegister() {
         // ACT
         String viewName = controller.register(model);
-        
+
         // ASSERT
         verify(model).addAttribute(eq("user"), any(User.class));
         assertEquals("auth/register", viewName);
@@ -62,9 +61,9 @@ class AuthControllerTest {
 
         // ASSERT
         verify(userService).saveUser(newUser);
-        
+
         verify(model).addAttribute("successMessage", "User registered successfully!");
-        
+
         assertEquals("auth/login", viewName);
     }
 
@@ -83,9 +82,9 @@ class AuthControllerTest {
 
         // ASSERT (verify that the interraction did not happen with never() )
         verify(userService, never()).saveUser(existingUser);
-        
+
         verify(model).addAttribute("successMessage", "User already registered!");
-        
+
         assertEquals("auth/login", viewName);
     }
 }

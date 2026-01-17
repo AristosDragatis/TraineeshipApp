@@ -1,4 +1,5 @@
 package myy803.traineeship_app.controllers.searchstrategies;
+
 import myy803.traineeship_app.domain.Company;
 import myy803.traineeship_app.domain.Student;
 import myy803.traineeship_app.domain.TraineeshipPosition;
@@ -7,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SearchBasedOnLocationTest {
 
     @Test
-    void filterPositions(){
+    void filterPositions() {
         // Setup data
         SearchBasedOnLocation strategy = new SearchBasedOnLocation();
         Student student = new Student("new_student");
@@ -20,7 +21,7 @@ public class SearchBasedOnLocationTest {
 
         // position at Ioannina that matches
         TraineeshipPosition pos1 = new TraineeshipPosition();
-        pos1.setCompany(new Company("owner1", "Teamviewer","Ioannina", new ArrayList<>()));
+        pos1.setCompany(new Company("owner1", "Teamviewer", "Ioannina", new ArrayList<>()));
         pos1.setAssigned(false);
 
         // position that does not match

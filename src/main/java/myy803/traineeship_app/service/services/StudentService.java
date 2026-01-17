@@ -19,16 +19,16 @@ public class StudentService {
     @Autowired
     private LogBookMapper logbookMapper;
 
-    public Student retrieveStudentProfile(String studentUsername){
+    public Student retrieveStudentProfile(String studentUsername) {
         Student student = studentMapper.findByUsername(studentUsername);
-        if(student == null){
+        if (student == null) {
             student = new Student(studentUsername);
         }
 
         return student;
     }
 
-    public void saveStudentProfile(Student student){
+    public void saveStudentProfile(Student student) {
 
         student.setLookingForTraineeship(true);
         studentMapper.save(student);
@@ -36,7 +36,7 @@ public class StudentService {
 
 
     // add entry to logbook for students
-    public void addEntryToLogBook(String username, String content){
+    public void addEntryToLogBook(String username, String content) {
         Student student = studentMapper.findByUsername(username);
 
         LogBook entry = new LogBook();
@@ -47,7 +47,7 @@ public class StudentService {
         logbookMapper.save(entry);
     }
 
-    public List<LogBook> getStudentLogBook(String username){
+    public List<LogBook> getStudentLogBook(String username) {
         return logbookMapper.findByStudent_Username(username);
     }
 }

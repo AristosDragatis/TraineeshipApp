@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PositionsSearchFactory {
-	@Autowired 
-	private SearchBasedOnLocation searchBasedOnLocation;
-	
-	@Autowired
-	private SearchBasedOnInterests searchBasedOnInterests;
-	
-	public PositionsSearchStrategy create(String strategy) {
-		if("location".equals(strategy)) return searchBasedOnLocation;
-		if("interests".equals(strategy)) return searchBasedOnInterests;
-		return searchBasedOnLocation; //default
-	}
+    @Autowired
+    private SearchBasedOnLocation searchBasedOnLocation;
+
+    @Autowired
+    private SearchBasedOnInterests searchBasedOnInterests;
+
+    public PositionsSearchStrategy create(String strategy) {
+        if ("location".equals(strategy)) return searchBasedOnLocation;
+        if ("interests".equals(strategy)) return searchBasedOnInterests;
+        return searchBasedOnLocation; //default
+    }
 }

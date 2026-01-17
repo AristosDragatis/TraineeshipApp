@@ -19,10 +19,10 @@ import java.util.List;
 public class CommitteeController {
 
     @Autowired
-    private TraineeshipService  traineeshipService;
+    private TraineeshipService traineeshipService;
 
     @RequestMapping("/dashboard")
-    public String getCommitteeDashboard(){
+    public String getCommitteeDashboard() {
 
         return "committee/dashboard";
     }
@@ -40,7 +40,7 @@ public class CommitteeController {
             @RequestParam("selected_student_id") String studentUsername,
             @RequestParam("strategy") String strategy, Model model) {
 
-        List<TraineeshipPosition> positions =  traineeshipService.findPositionsForStudent(studentUsername, strategy);
+        List<TraineeshipPosition> positions = traineeshipService.findPositionsForStudent(studentUsername, strategy);
 
         model.addAttribute("positions", positions);
         model.addAttribute("student_username", studentUsername);
@@ -75,7 +75,7 @@ public class CommitteeController {
     }
 
     @RequestMapping("/list_assigned_traineeships")
-    public String listAssignedTraineeships(Model model){
+    public String listAssignedTraineeships(Model model) {
 
         List<TraineeshipPosition> inProgress = traineeshipService.listProgressTraineeships();
         model.addAttribute("positions", inProgress);

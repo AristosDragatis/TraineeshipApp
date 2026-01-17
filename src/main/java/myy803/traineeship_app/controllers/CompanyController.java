@@ -24,13 +24,13 @@ public class CompanyController {
     private CompanyService companyService;
 
     @RequestMapping("/dashboard")
-    public String getCompanyDashboard(){
+    public String getCompanyDashboard() {
 
         return "company/dashboard";
     }
 
     @RequestMapping("/profile")
-    public String retrieveCompanyProfile(Model model){
+    public String retrieveCompanyProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         System.err.println("Logged use: " + username);
@@ -52,7 +52,7 @@ public class CompanyController {
     }
 
     @RequestMapping("/list_available_positions")
-    public String listAvailablePositions(Model model){
+    public String listAvailablePositions(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         System.err.println("Logged use: " + username);
@@ -87,7 +87,7 @@ public class CompanyController {
     }
 
     @RequestMapping("/list_assigned_positions")
-    public String listAssignedPositions(Model model){
+    public String listAssignedPositions(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
@@ -110,7 +110,7 @@ public class CompanyController {
 
     @RequestMapping("/save_evaluation")
     public String saveEvaluation(@RequestParam("positionId") Integer positionId,
-                                 @ModelAttribute("evaluation")Evaluation evaluation){
+                                 @ModelAttribute("evaluation") Evaluation evaluation) {
 
         // call the service method
         companyService.fillEvaluation(positionId, evaluation);
@@ -120,7 +120,7 @@ public class CompanyController {
     }
 
     @RequestMapping("/show_evaluation_form")
-    public String showEvaluationForm(@RequestParam("positionId") Integer positionId,Model model){
+    public String showEvaluationForm(@RequestParam("positionId") Integer positionId, Model model) {
 
         Evaluation evaluation = companyService.getCompanyEvaluation(positionId);
 
@@ -135,10 +135,10 @@ public class CompanyController {
     }
 
     @RequestMapping("/view_evaluation")
-    public String viewEvaluationForm(@RequestParam("positionId") Integer positionId, Model model){
+    public String viewEvaluationForm(@RequestParam("positionId") Integer positionId, Model model) {
         Evaluation evaluation = companyService.getCompanyEvaluation(positionId);
 
-        if(evaluation == null){
+        if (evaluation == null) {
             return "redirect:/company/show_evaluation_form?positionId=" + positionId;
         }
 

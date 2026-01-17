@@ -1,12 +1,8 @@
 package myy803.traineeship_app.controllers.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import myy803.traineeship_app.controllers.CommitteeController;
+import myy803.traineeship_app.domain.TraineeshipPosition;
+import myy803.traineeship_app.service.services.TraineeshipService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,9 +10,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
-import myy803.traineeship_app.controllers.CommitteeController;
-import myy803.traineeship_app.domain.TraineeshipPosition;
-import myy803.traineeship_app.service.services.TraineeshipService;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CommitteeControllerTest {

@@ -4,15 +4,12 @@ import myy803.traineeship_app.domain.Professor;
 import myy803.traineeship_app.domain.TraineeshipPosition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-// Δεν χρειάζεται MockitoExtension αν δεν χρησιμοποιείς @Mock
-// import org.mockito.junit.jupiter.MockitoExtension;
-// import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class AssignmentBasedOnLoadTest {
 

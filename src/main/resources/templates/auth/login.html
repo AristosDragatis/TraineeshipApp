@@ -8,9 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-	<title>Traineeship App Login</title>
+    <title>Traineeship App Login</title>
 </head>
 
 
@@ -20,14 +21,15 @@
 
     <form th:action="@{/login}" method="POST">
         <h3 th:text="Login"></h3>
-        <input type="text" name="username" th:placeholder="Username" /> <br /><br />
-        <input type="password" th:placeholder="Password" name="password"/> <br /><br />
-        <button type="Submit" class="btn btn-info col-2"> Login </button>
-        <a th:href="@{register}" class="btn btn-primary col-2"> Register </a><br />
-        
-        <div th:if="${param.error}"><p>Username or Password is invalid.</p></div> <br/>
-   
-   		<span th:utext="${successMessage}"></span>
+        <input type="text" name="username" th:placeholder="Username"/> <br/><br/>
+        <input type="password" th:placeholder="Password" name="password"/> <br/><br/>
+        <button type="Submit" class="btn btn-info col-2"> Login</button>
+        <a th:href="@{register}" class="btn btn-primary col-2"> Register </a><br/>
+
+        <div th:if="${param.error}"><p>Username or Password is invalid.</p></div>
+        <br/>
+
+        <span th:utext="${successMessage}"></span>
     </form>
 
 </div>

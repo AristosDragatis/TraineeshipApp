@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -21,7 +21,7 @@ public class PositionsSearchFactoryTest {
     private PositionsSearchFactory factory;
 
     @Test
-    void testCorrectReturnsStrategy(){
+    void testCorrectReturnsStrategy() {
         // interests
         PositionsSearchStrategy strategy1 = factory.create("interests");
         assertEquals(searchBasedOnInterests, strategy1);

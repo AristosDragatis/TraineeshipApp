@@ -1,17 +1,5 @@
 package myy803.traineeship_app.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import myy803.traineeship_app.controllers.searchstrategies.AbstractPositionsSearch;
 import myy803.traineeship_app.controllers.searchstrategies.PositionsSearchFactory;
 import myy803.traineeship_app.controllers.supervisorsearchstrategies.SupervisorAssigmentFactory;
@@ -22,18 +10,36 @@ import myy803.traineeship_app.mappers.ProfessorMapper;
 import myy803.traineeship_app.mappers.StudentMapper;
 import myy803.traineeship_app.mappers.TraineeshipPositionsMapper;
 import myy803.traineeship_app.service.services.TraineeshipService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TraineeshipServiceTest {
 
-    @Mock private StudentMapper studentMapper;
-    @Mock private PositionsSearchFactory positionsSearchFactory;
-    @Mock private TraineeshipPositionsMapper positionsMapper;
-    @Mock private ProfessorMapper professorMapper;
-    @Mock private SupervisorAssigmentFactory assigmentFactory;
+    @Mock
+    private StudentMapper studentMapper;
+    @Mock
+    private PositionsSearchFactory positionsSearchFactory;
+    @Mock
+    private TraineeshipPositionsMapper positionsMapper;
+    @Mock
+    private ProfessorMapper professorMapper;
+    @Mock
+    private SupervisorAssigmentFactory assigmentFactory;
 
-    @Mock private AbstractPositionsSearch mockSearchStrategy;
-    @Mock private SupervisorAssignmentStrategy mockAssignStrategy;
+    @Mock
+    private AbstractPositionsSearch mockSearchStrategy;
+    @Mock
+    private SupervisorAssignmentStrategy mockAssignStrategy;
 
     @InjectMocks
     private TraineeshipService service;

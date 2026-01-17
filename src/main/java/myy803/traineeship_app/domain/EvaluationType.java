@@ -1,8 +1,8 @@
 package myy803.traineeship_app.domain;
 
 public enum EvaluationType {
-	PROFESSOR_EVALUATION("Professor Evaluation"),
-	COMPANY_EVALUATION("Company");	
+    PROFESSOR_EVALUATION("Professor Evaluation"),
+    COMPANY_EVALUATION("Company");
 
     private final String value;
 

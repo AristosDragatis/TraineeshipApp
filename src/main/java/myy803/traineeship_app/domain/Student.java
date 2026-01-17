@@ -5,134 +5,134 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="students")
+@Table(name = "students")
 public class Student {
-	@Id
-	@Column(name="username")
-	private String username;
-	
-	@Column(name="student_name")
-	private String studentName;
-	
-	@Column(name="AM")
-	private String AM;
-	
-	@Column(name="average_grade")
-	private double avgGrade;
-	
-	@Column(name="preferred_location")
-	private String preferredLocation;
-	
-	@Column(name="interests")
-	private String interests;
-	
-	@Column(name="skills")
-	private String skills;
-	
-	@Column(name="looking_for_traineeship")
-	private boolean lookingForTraineeship;
+    @Id
+    @Column(name = "username")
+    private String username;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(name = "student_name")
+    private String studentName;
+
+    @Column(name = "AM")
+    private String AM;
+
+    @Column(name = "average_grade")
+    private double avgGrade;
+
+    @Column(name = "preferred_location")
+    private String preferredLocation;
+
+    @Column(name = "interests")
+    private String interests;
+
+    @Column(name = "skills")
+    private String skills;
+
+    @Column(name = "looking_for_traineeship")
+    private boolean lookingForTraineeship;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id", referencedColumnName = "id")
-	private TraineeshipPosition assignedTraineeship;
+    private TraineeshipPosition assignedTraineeship;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<LogBook> logBooks;
-	
-	public Student() {
-		super();
-	}
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<LogBook> logBooks;
 
-	public Student(String username, String studentName, String aM, double avgGrade, String preferredLocation,
-			String interests, String skills, boolean lookingForTraineeship, TraineeshipPosition assignedTraineeship) {
-		super();
-		this.username = username;
-		this.studentName = studentName;
-		AM = aM;
-		this.avgGrade = avgGrade;
-		this.preferredLocation = preferredLocation;
-		this.interests = interests;
-		this.skills = skills;
-		this.lookingForTraineeship = lookingForTraineeship;
-		this.assignedTraineeship = assignedTraineeship;
-	}
+    public Student() {
+        super();
+    }
 
-	public Student(String studentUsername) {
-		this.username = studentUsername;
-		this.lookingForTraineeship = true;
-	}
+    public Student(String username, String studentName, String aM, double avgGrade, String preferredLocation,
+                   String interests, String skills, boolean lookingForTraineeship, TraineeshipPosition assignedTraineeship) {
+        super();
+        this.username = username;
+        this.studentName = studentName;
+        AM = aM;
+        this.avgGrade = avgGrade;
+        this.preferredLocation = preferredLocation;
+        this.interests = interests;
+        this.skills = skills;
+        this.lookingForTraineeship = lookingForTraineeship;
+        this.assignedTraineeship = assignedTraineeship;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public Student(String studentUsername) {
+        this.username = studentUsername;
+        this.lookingForTraineeship = true;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getStudentName() {
-		return studentName;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
+    public String getStudentName() {
+        return studentName;
+    }
 
-	public String getAM() {
-		return AM;
-	}
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
 
-	public void setAM(String aM) {
-		AM = aM;
-	}
+    public String getAM() {
+        return AM;
+    }
 
-	public double getAvgGrade() {
-		return avgGrade;
-	}
+    public void setAM(String aM) {
+        AM = aM;
+    }
 
-	public void setAvgGrade(double avgGrade) {
-		this.avgGrade = avgGrade;
-	}
+    public double getAvgGrade() {
+        return avgGrade;
+    }
 
-	public String getPreferredLocation() {
-		return preferredLocation;
-	}
+    public void setAvgGrade(double avgGrade) {
+        this.avgGrade = avgGrade;
+    }
 
-	public void setPreferredLocation(String preferredLocation) {
-		this.preferredLocation = preferredLocation;
-	}
+    public String getPreferredLocation() {
+        return preferredLocation;
+    }
 
-	public String getInterests() {
-		return interests;
-	}
+    public void setPreferredLocation(String preferredLocation) {
+        this.preferredLocation = preferredLocation;
+    }
 
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
+    public String getInterests() {
+        return interests;
+    }
 
-	public String getSkills() {
-		return skills;
-	}
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
 
-	public void setSkills(String skills) {
-		this.skills = skills;
-	}
+    public String getSkills() {
+        return skills;
+    }
 
-	public boolean isLookingForTraineeship() {
-		return lookingForTraineeship;
-	}
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
 
-	public void setLookingForTraineeship(boolean lookingForTraineeship) {
-		this.lookingForTraineeship = lookingForTraineeship;
-	}
+    public boolean isLookingForTraineeship() {
+        return lookingForTraineeship;
+    }
 
-	public TraineeshipPosition getAssignedTraineeship() {
-		return assignedTraineeship;
-	}
+    public void setLookingForTraineeship(boolean lookingForTraineeship) {
+        this.lookingForTraineeship = lookingForTraineeship;
+    }
 
-	public void setAssignedTraineeship(TraineeshipPosition assignedTraineeship) {
-		this.assignedTraineeship = assignedTraineeship;
-	}
+    public TraineeshipPosition getAssignedTraineeship() {
+        return assignedTraineeship;
+    }
+
+    public void setAssignedTraineeship(TraineeshipPosition assignedTraineeship) {
+        this.assignedTraineeship = assignedTraineeship;
+    }
 }
 
 //No need to keep that list. A recommendations button returns 
@@ -144,6 +144,6 @@ public class Student {
 //			mappedBy="applicant")	// this is bidirectional 
 //	private List<Application> applications;
 //	
-	
+
 //Every student has his own preferred strategy for finding a position. 
-	// The committee gets a list of matching positions and decides which one to assign.  
+// The committee gets a list of matching positions and decides which one to assign.

@@ -1,97 +1,97 @@
 package myy803.traineeship_app.domain;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name="professors")
+@Table(name = "professors")
 public class Professor {
-	
-	@Id
-	@Column(name="username")
-	private String username;
-	
-	@Column(name="professor_name")
-	private String professorName;
-	
-	@Column(name="interests")
-	private String interests;
 
-	@OneToMany(
-			mappedBy = "supervisor",
-			cascade=CascadeType.ALL, 
-			fetch= FetchType.LAZY)
-	@JsonIgnore
-	private List<TraineeshipPosition> supervisedPositions;
+    @Id
+    @Column(name = "username")
+    private String username;
 
-	public Professor() {
-		super();
-	}
+    @Column(name = "professor_name")
+    private String professorName;
 
-	public Professor(String username) {
-		super();
-		this.username = username;
-	}
+    @Column(name = "interests")
+    private String interests;
 
-	public Professor(String username, String professorName, String interests,
-			List<TraineeshipPosition> supervisedPositions) {
-		super();
-		this.username = username;
-		this.professorName = professorName;
-		this.interests = interests;
-		this.supervisedPositions = supervisedPositions;
-	}
+    @OneToMany(
+            mappedBy = "supervisor",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<TraineeshipPosition> supervisedPositions;
 
-	public String getUsername() {
-		return username;
-	}
+    public Professor() {
+        super();
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public Professor(String username) {
+        super();
+        this.username = username;
+    }
 
-	public String getProfessorName() {
-		return professorName;
-	}
+    public Professor(String username, String professorName, String interests,
+                     List<TraineeshipPosition> supervisedPositions) {
+        super();
+        this.username = username;
+        this.professorName = professorName;
+        this.interests = interests;
+        this.supervisedPositions = supervisedPositions;
+    }
 
-	public void setProfessorName(String professorName) {
-		this.professorName = professorName;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getInterests() {
-		return interests;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
+    public String getProfessorName() {
+        return professorName;
+    }
+
+    public void setProfessorName(String professorName) {
+        this.professorName = professorName;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
 
 
-	public List<TraineeshipPosition> getSupervisedPositions() {
-		return supervisedPositions;
-	}
+    public List<TraineeshipPosition> getSupervisedPositions() {
+        return supervisedPositions;
+    }
 
-	public void setSupervisedPositions(List<TraineeshipPosition> supervisedPositions) {
-		this.supervisedPositions = supervisedPositions;
-	}
+    public void setSupervisedPositions(List<TraineeshipPosition> supervisedPositions) {
+        this.supervisedPositions = supervisedPositions;
+    }
 
-	public int compareLoad(Professor candidateSupervisor) {
-		if(candidateSupervisor.supervisedPositions.size() < supervisedPositions.size())
-			return -1;
-		return 0;
-	}
+    public int compareLoad(Professor candidateSupervisor) {
+        if (candidateSupervisor.supervisedPositions.size() < supervisedPositions.size())
+            return -1;
+        return 0;
+    }
 
-	public void addPosition(TraineeshipPosition position) {
-		supervisedPositions.add(position);
-	}
+    public void addPosition(TraineeshipPosition position) {
+        supervisedPositions.add(position);
+    }
 
-	public boolean match(String[] topics) {
-		for(int i = 0; i < topics.length; i++)
-			if(interests.contains(topics[i]))
-				return true;
-			
-		return false;
-	}
+    public boolean match(String[] topics) {
+        for (int i = 0; i < topics.length; i++)
+            if (interests.contains(topics[i]))
+                return true;
+
+        return false;
+    }
 }

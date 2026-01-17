@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CompanyTest {
 
@@ -16,7 +17,7 @@ public class CompanyTest {
 
     // setting up everything before tests
     @BeforeEach
-    void setUp(){
+    void setUp() {
         List<TraineeshipPosition> myPositions = new ArrayList<>();
         company = new Company("Teamviewer", "Teamviewer", "Ioannina", myPositions);
 
@@ -25,18 +26,18 @@ public class CompanyTest {
     }
 
     @Test
-    void testAddPositionAndGetAvailable(){
+    void testAddPositionAndGetAvailable() {
         // adds a new position
         company.addPosition(position);
 
         // gets available positions
-       List<TraineeshipPosition> positions = company.getAvailablePositions();
+        List<TraineeshipPosition> positions = company.getAvailablePositions();
 
-       assertEquals("Teamviewer", company.getUsername() );
-       assertEquals("Ioannina", company.getCompanyLocation());
+        assertEquals("Teamviewer", company.getUsername());
+        assertEquals("Ioannina", company.getCompanyLocation());
 
-       assertNotNull(positions, "List must not be null");
-       assertEquals(1, positions.size(), "There must be exactly 1 available positions");
-       assertEquals("Java Developer", positions.get(0).getTitle());
+        assertNotNull(positions, "List must not be null");
+        assertEquals(1, positions.size(), "There must be exactly 1 available positions");
+        assertEquals("Java Developer", positions.get(0).getTitle());
     }
 }

@@ -73,11 +73,11 @@ public class CompanyService {
                 .stream()
                 .filter(p -> p.getId().equals(positionId))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Position not found or not owned by the company") );
+                .orElseThrow(() -> new RuntimeException("Position not found or not owned by the company"));
 
 
         // we dont delete a position that has a student
-        if(positionToDelete.getStudent() != null) {
+        if (positionToDelete.getStudent() != null) {
             throw new RuntimeException("Cannot delete an assigned position");
         }
 
@@ -95,7 +95,7 @@ public class CompanyService {
                 .orElseThrow(() -> new RuntimeException("Position not found"));
 
         // check if position has an assisgned student
-        if(position.getStudent() == null){
+        if (position.getStudent() == null) {
             throw new RuntimeException("Cannot evaluate a position without an assigned student");
         }
 
@@ -116,7 +116,7 @@ public class CompanyService {
     }
 
 
-    public Evaluation getCompanyEvaluation(Integer positionId){
+    public Evaluation getCompanyEvaluation(Integer positionId) {
         TraineeshipPosition position = traineeshipPositionsMapper.findById(positionId)
                 .orElseThrow(() -> new RuntimeException("Position not found"));
 
